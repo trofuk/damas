@@ -1,0 +1,11 @@
+<?php
+$images = array();
+$images = $block->getGalleryImages($_product);
+?>
+<?php if(!empty($images) && count($images) > 1) : ?>
+    <ul class="gallery-owl-thumb owl-carousel">
+        <?php foreach ($images as $image) : ?>
+            <li><img src="<?=$image['thumb']?>" data-full="<?=$image['full']?>" data-img="<?=$image['img']?>" ></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>

@@ -1,0 +1,16 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+
+ $_product = $block->getProduct();
+ if($_product->getAttributeText('online_product') == 'No'){
+   echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('product-phone-number')->toHtml();
+ }
+?>
+

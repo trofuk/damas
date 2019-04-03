@@ -1,0 +1,59 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+?>
+
+<section class="page-checkout">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="h1"><?php echo __('Checkout');?></h1>
+            </div>
+        </div>
+        <div class="row" id="checkout" data-bind="scope:'checkout'">
+
+                    <div id="checkout-loader" data-role="checkout-loader" class="loading-mask">
+                        <div class="loader">
+                            <img src="<?php /* @escapeNotVerified */ echo $block->getViewFileUrl('img/loader.gif'); ?>"
+                                 alt="<?php /* @escapeNotVerified */ echo __('Loading...'); ?>"
+                                 style="position: absolute;">
+                        </div>
+                    </div>
+
+                    <script type="text/x-magento-init">
+                        {
+                            "#checkout": {
+                                "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */ echo $block->getJsLayout();?>
+                            }
+                        }
+                    </script>
+
+                    <!-- ko template: getTemplate() --><!-- /ko -->
+                    <script>
+                        window.checkoutConfig = <?php /* @escapeNotVerified */ echo \Zend_Json::encode($block->getCheckoutConfig()); ?>;
+                        // Create aliases for customer.js model from customer module
+                        window.isCustomerLoggedIn = window.checkoutConfig.isCustomerLoggedIn;
+                        window.customerData = window.checkoutConfig.customerData;
+                        window.authenticationFormStoredInVariableNotShowed = <?php /* @escapeNotVerified */ echo \Zend_Json::encode($block->getChildHtml('after_customer_login_sociallogin')); ?>;
+                        window.countriesWithOptionalZip = <?php /* @escapeNotVerified */ echo $this->helper('Magento\Directory\Helper\Data')->getCountriesWithOptionalZip(true) ?>
+                    </script>
+
+                    <script>
+                        require([
+                            'mage/url',
+                            'Magento_Ui/js/block-loader'
+                        ], function(url, blockLoader) {
+                            blockLoader("<?php /* @escapeNotVerified */ echo $block->getViewFileUrl('images/loader.gif'); ?>");
+                            return url.setBaseUrl('<?php /* @escapeNotVerified */ echo $block->getBaseUrl();?>');
+                        })
+                    </script>
+
+
+
+        </div>
+    </div>
+</section>

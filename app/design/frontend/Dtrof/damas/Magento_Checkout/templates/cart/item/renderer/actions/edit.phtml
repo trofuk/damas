@@ -1,0 +1,46 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Checkout\Block\Cart\Item\Renderer\Actions\Edit */
+
+$id = $block->getItem()->getId();
+$infoBuyRequest = $block->getItem()->getOptionByCode('info_buyRequest')->getValue();
+$options = (!empty($infoBuyRequest))?unserialize($infoBuyRequest): array();
+$_item = $block->getItem();
+$product = $_item->getProduct();
+?>
+<?php if ($block->isProductVisibleInSiteVisibility()): ?>
+    <?php if($product->getAttributeText('inscription') == 'Yes'):?>
+        <a href="/inscription/index/index?id=<?php echo $id;?>"
+           class="p-engrav inscriptionPopup addInscription <?php echo (!empty($options['inscription']['text']))?'hidden':''?>">
+            <?php echo __('Engraving is free as well');?>
+        </a>
+        <p class="<?php echo (isset($options['inscription']) && !empty($options['inscription']['text']))?'':'hidden'?> functionalPopup inscriptionOnCart">
+            <?php echo __('Inscription:');?>
+            <a href="/inscription/index/index?id=<?php echo $id;?>" class="inscriptionPopup">
+                <span class="selected-inscription">
+                    <?php echo (isset($options['inscription']) && !empty($options['inscription']['text']))?$options['inscription']['text']:''?>
+                </span>
+            </a>
+
+            <span class="remove-inscription"
+                  data-id="<?php echo $id?>"
+                  style="cursor: pointer">X</span>
+        </p>
+        <div data-id="<?php echo $id;?>" class="inscription-hidden-inputs">
+            <input type="hidden"
+                   value="<?php echo (isset($options['inscription']) && !empty($options['inscription']['text']))?$options['inscription']['text']:''?>"
+                   name="inscription[text]"
+                   class="inscription_text">
+            <input type="hidden"
+                   value="<?php echo (isset($options['inscription']) && !empty($options['inscription']['font']))?$options['inscription']['font']:''?>"
+                   name="inscription[font]"
+                   class="inscription_font">
+        </div>
+    <?php endif;?>
+<?php endif ?>

@@ -1,0 +1,22 @@
+<?php
+$attributes =  $block->checkAttributeId();
+?>
+<?php if(!empty($attributes)):?>
+    <?php foreach($attributes as $attribute):?>
+        <?php $active = $this->getRequest()->getParam($attribute['attribute_code'])?>
+        <div class="filterRelationship filterCircle filterItemBlock">
+            <p class="filterTitle"><?php echo $attribute['frontend_label'];?></p>
+            <div class="table-wrapper">
+                <?php if(!empty($attribute['options'])):?>
+                    <?php foreach($attribute['options'] as $options):?>
+                        <a href="<?=$attribute['url']?>&<?=$attribute['attribute_code']?>=<?=$options['value']?>"
+                           class="gift-link filter-icon-block rightGiftIcon <?php echo (!empty($active) && $active ==  $options['value'])? 'active': ''?>">
+                            <span class="filter-icon-img" style="background-image: url('<?=$options['image']?>')"></span>
+                            <span class="filter-icon-title"><?php echo $options['label']?></span>
+                        </a>
+                    <?php endforeach;?>
+                <?php endif;?>
+            </div>
+        </div>
+    <?php endforeach;?>
+<?php endif;?>

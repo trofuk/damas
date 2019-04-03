@@ -1,0 +1,33 @@
+<?php
+$attributes =  $block->checkAttributeId();
+?>
+
+<?php if(!empty($attributes)):?>
+    <?php foreach($attributes as $attribute):?>
+        <?php if(!empty($attribute['options'])):?>
+            <?php $active = $this->getRequest()->getParam($attribute['attribute_code'])?>
+            <div class="selectFilter">
+                <p class="filterTitle"><?php echo $attribute['frontend_label'];?></p>
+                <div class="select-wrap">
+                    <div class="site-selected">
+                        <span>
+                              <?php if($attribute['selected'] > 0): echo $block->getOptionName($attribute['attribute_code'], $attribute['selected']);
+                              else: echo __('Choose').' '.$attribute['frontend_label'];
+                              endif;?>
+                        </span>
+                    </div>
+                    <ul class="sites-options">
+                        <?php foreach($attribute['options'] as $options):?>
+                            <li>
+                                <a href="<?=$attribute['url']?>&<?=$attribute['attribute_code']?>=<?=$options['value']?>"
+                                   class="gift-link">
+                                    <?php echo $options['label']?>
+                                </a>
+                            </li>
+                        <?php endforeach;?>
+                    </ul>
+                </div>
+            </div>
+        <?php endif;?>
+    <?php endforeach;?>
+<?php endif;?>

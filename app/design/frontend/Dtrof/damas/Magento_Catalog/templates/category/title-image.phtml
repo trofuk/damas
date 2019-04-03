@@ -1,0 +1,21 @@
+<?php
+$_helper    = $this->helper('Magento\Catalog\Helper\Output');
+$_category  = $block->getCurrentCategory();
+$_imgUrl = $_category->getImageUrl();
+if(!empty($_imgUrl)) : ?>
+<script type="application/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var catBgUrl = 'url(<?=$_imgUrl?>)';
+        var mainBlock = document.querySelector('.category-landing-wrapper .main');
+        var leftBg = document.createElement('div'),
+            rightBg = document.createElement('div');
+        leftBg.className = 'bg-image left';
+        rightBg.className = 'bg-image right';
+        leftBg.style.backgroundImage = catBgUrl;
+        rightBg.style.backgroundImage = catBgUrl;
+        mainBlock.style.backgroundImage = '';
+        mainBlock.appendChild(leftBg);
+        mainBlock.appendChild(rightBg);
+    });
+</script>
+<?php endif; ?>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Dtrof_Gifts::oyi_gifts_configuration"
+             title="Gifts Advisor"
+             module="Dtrof_Gifts"
+             sortOrder="100"
+             parent="Magento_Backend::stores_attributes"
+             action="oyigifts/configuration"
+             resource="Dtrof_Gifts::oyi_gifts_configuration"/>
+        <add id="Dtrof_Gifts::oyi_gifts_images"
+             title="Gifts Advisor Images"
+             module="Dtrof_Gifts"
+             sortOrder="110"
+             parent="Magento_Backend::stores_attributes"
+             action="oyigifts/images"
+             resource="Dtrof_Gifts::oyi_gifts_images"/>
+    </menu>
+</config>

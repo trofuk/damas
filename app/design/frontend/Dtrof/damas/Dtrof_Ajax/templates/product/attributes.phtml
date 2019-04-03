@@ -1,0 +1,74 @@
+<?php
+$block->setProductById();
+$_product = $block->getProduct();
+$productType = $_product->getTypeId();
+$attributes = array();
+if($productType != 'watches') {
+    $attributes = $block->getAttributes($_product);
+}
+?>
+<?php if(!empty($attributes)) : ?>
+    <div class="product-options-wrapper" id="product-options-wrapper" data-hasrequired="* Required Fields">
+        <div class="fieldset" tabindex="0">
+            <?php foreach ($attributes as $attribute) : ?>
+                <div class="field configurable required select-wrap">
+                    <label class="label" for="attribute<?=$attribute['attribute_id']?>"><?=$attribute['label']?> :</label>
+                    <select id="attribute<?=$attribute['attribute_id']?>"
+                            class="super-attribute-select"
+                            data-validate="{required:true}"
+                            name="super_attribute[<?=$attribute['attribute_id']?>]"
+                            tabindex="-1"
+                            title=" <?=$attribute['label']?>">
+                        <option value=""><?=__('Choose an Option...'); ?></option>
+                        <?php foreach ($attribute['options'] as $option) : ?>
+                            <option value="<?=$option['value_index']?>" data-attr="<?=$option['product_id']?>"><?=$option['label']?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <script>
+        require([
+            'jquery',
+            'select2'
+        ], function($){
+            var select = $('.select-wrap select');
+
+            if(select.length) {
+                select.each(function(){
+                    var customClass;
+                    if( $(this).hasClass('orange-sel')) {
+                        customClass = 'form-filter-drop-orange';
+                    } else if( $(this).closest('.drop-size').length ){
+                        customClass = 'select2-drop-size';
+                    } else if( $(this).closest('.drop-gift').length ){
+                        customClass = 'select2-drop-gift';
+                    } else if( $(this).closest('.drop-silver').length ){
+                        customClass = 'select2-drop-silver';
+                    }  else if( $(this).closest('.drop-dark').length ){
+                        customClass = 'select2-drop-dark';
+                    } else {
+                        customClass = 'form-filter-drop';
+                    }
+                    $(this).select2({
+                        minimumResultsForSearch: -1,
+                        dropdownCssClass: customClass,
+                        containerCssClass: ''
+                    })
+
+                });
+            }
+
+            var attribute = $('.super-attribute-select');
+            if(attribute.length > 0){
+                attribute.on('change',function(){
+                    var val= $(this).find('option:selected').data('attr');
+                    $(this).parents('form').find('input[name=selected_configurable_option]').val(val);
+//                    $(this).parents('.itemNewWrap').find('form .super_attribute').val(attr_id);
+                    return false;
+                });
+            }
+        });
+    </script>
+<?php endif; ?>

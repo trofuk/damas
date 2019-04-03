@@ -1,0 +1,5 @@
+<?php if($block->checkType()) : ?>
+    <?php echo $block->getToolbarHtml(); ?>
+<?php else : ?>
+    <?php include ($block->getTemplateFile('Dtrof_Catalog::product/list/toolbar/amount.phtml')) ?>
+<?php endif; ?>

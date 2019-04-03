@@ -1,0 +1,26 @@
+<?php
+$categoryId = (int)$this->getRequest()->getParam('id');
+$add_id = '';
+if($categoryId > 0){
+    $att = $block->getRootAttributeByEntity($categoryId);
+    $add_id = '/gifts?id='.$categoryId.'&configuration_id='.$att['id'].'&parent_id=0&attribute_id='.$att['attribute_id'];
+}
+?>
+<div>
+    <section class="giftAdvisor" id="giftAdvisor">
+        <h1><?php echo __('DO YOU WANT TO USE THE GIFT ADVISOR?');?></h1>
+        <div class="buttons-wrap">
+            <a href="/gifts/advisor/steppopup<?php echo $add_id;?>" class="button-gold color-dark showAdvisorStep">
+                <?php echo __('Yes, I want to use');?>
+            </a>
+        </div>
+        <div class="caption-wrap">
+            <p><?php echo __('or');?></p>
+        </div>
+        <div class="buttons-wrap">
+            <button class="button-gold color-dark-reverse" onclick="location.href='/gifts.html'">
+                <?php echo __('skip this step');?>
+            </button>
+        </div>
+    </section>
+</div>

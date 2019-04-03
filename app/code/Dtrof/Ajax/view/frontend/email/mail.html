@@ -1,0 +1,20 @@
+<!--@subject New Mail Request  @-->
+<!--@vars {
+
+} @-->
+
+{{template config_path="design/email/header_template"}} <!-- pathe of template header-->
+
+<h1
+        style="margin:0 auto 15px; color: #452a2b; font-weight: bold; font-family: Arial, sans-serif; font-size: 28px; line-height: 36px; letter-spacing: 4px; text-transform: uppercase;">New request</h1>
+
+<p
+        style="color: #585858; font-family: Arial, sans-serif; font-size: 13px; line-height: 18px; letter-spacing: 2px;"><span style="font-weight: bold">{{trans "Name:"}}</span> {{var data.firstname}}</p>
+<p
+        style="color: #585858; font-family: Arial, sans-serif; font-size: 13px; line-height: 18px; letter-spacing: 2px;"><span style="font-weight: bold">{{trans "Email:"}}</span> {{var  data.email}}</p>
+<p
+        style="color: #585858; font-family: Arial, sans-serif; font-size: 13px; line-height: 18px; letter-spacing: 2px;"><span style="font-weight: bold">{{trans "Product:"}}</span> <a href="{{var data.product-url}}"  style="color: #b99b6b; text-decoration: underline; font-size: inherit; font-family: inherit; line-height: inherit; -webkit-text-size-adjust:none; display: inline-block;">{{var data.product-name}}</a></p>
+<p
+        style="color: #585858; font-family: Arial, sans-serif; font-size: 13px; line-height: 18px; letter-spacing: 2px;"><span style="font-weight: bold">{{trans "Message:"}}</span> {{var  data.comment}}</p>
+
+{{template config_path="design/email/footer_template"}} <!--footer of template-->

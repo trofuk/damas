@@ -1,0 +1,56 @@
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<li id="shipping" class="checkout-shipping-address" data-bind="css: { active: showIfUserIsLogged() }">
+    <div class="c-step-title">SHIPPING INFORMATION<a href="#" class="back-step"  data-bind="click: navigateToPrevStep">previous step<i class="icon-arrow-top"></i></a></div>
+
+        <div id="checkout-step-shipping"
+             class="c-step-content"
+             data-role="content">
+            <div class="col-md-12">
+
+            <!-- ko if: (!quoteIsVirtual) -->
+            <!-- ko foreach: getRegion('customer-email') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+            <!--/ko-->
+
+            <!-- ko foreach: getRegion('address-list') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+
+            <!-- ko foreach: getRegion('address-list-additional-addresses') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+
+            <!-- Address form pop up -->
+            <!-- ko if: (!isFormInline) -->
+            <div id="opc-new-shipping-address" data-bind="visible: isFormPopUpVisible()">
+                <!-- ko template: 'Magento_Checkout/shipping-address/form' --><!-- /ko -->
+            </div>
+            <!-- /ko -->
+
+            <!-- ko foreach: getRegion('before-form') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+
+            <!-- Inline address form -->
+            <!-- ko if: (isFormInline) -->
+            <!-- ko template: 'Magento_Checkout/shipping-address/form' --><!-- /ko -->
+            <!-- /ko -->
+
+
+
+            <p>Select a billing address from your address book or enter a new address.</p>
+            <div class="input-group">
+                <button class="btn-dark btn-big" data-bind="click: navigateToNextStep">Continue</button>
+            </div>
+        </div>
+        </div>
+</li>
+
+
+

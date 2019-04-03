@@ -1,0 +1,12 @@
+<?php $imageData = $productImage->getData(); ?>
+<div class="item-details-share">
+    <div class="item-details-socialBlock">
+        <a href="https://www.facebook.com/sharer.php?u=<?php echo $_product->getProductUrl()?>" class="fb icon-social"></a>
+        <a href="https://twitter.com/intent/tweet?url=<?php echo $_product->getProductUrl();?>&text=<?php echo $_product->getName();?>" class="tw icon-social"></a>
+        <a href="https://plus.google.com/share?url=<?php echo $_product->getProductUrl()?>" target="_blank" class="gp icon-social"></a>
+        <a href="whatsapp://send?text=<?php echo $_product->getProductUrl()?>"  target="_blank" class="wt icon-social"></a>
+        <?php if($imageData['image_url'] != '') : ?>
+        <a href="https://pinterest.com/pin/create/bookmarklet/?media=<?php echo $imageData['image_url']; ?>&url=<?php echo $_product->getProductUrl()?>&description=<?php echo $_product->getName();?>" target="_blank" class="pt icon-social"></a>
+        <?php endif; ?>
+    </div>
+</div>

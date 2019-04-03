@@ -1,0 +1,88 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product additional attributes template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Attributes
+ */
+?>
+<?php
+    $_helper = $this->helper('Magento\Catalog\Helper\Output');
+    $_product = $block->getProduct();
+    $productType = $_product->getTypeId();
+    $cat_ids = $_product->getCategoryIds();
+    $cat_name = '';
+    if(!empty($cat_ids)){
+        $category_helper = $this->helper('Dtrof\Catalog\Helper\Data');
+        $cat_name = $category_helper->setCategory($cat_ids[0])->getName();
+    }
+    $_web_helper = $this->helper('Dtrof\Catalog\Helper\Data');
+    $website_id = $_web_helper->getCurrentWebsite();
+    if($_product->getAttributeText('online_product') == 'Yes' && ($website_id == 7 || $website_id == 6)){
+        $jewellery_array_code = array(
+            'main_stone_type'=>'',
+            'main_stone_weight' => '',
+            'unit'=> '',
+            'stone' => '',
+            'stone_color' => '',
+            'stone_clarity' => '',
+            'stone_weight' => '',
+            'unit_copy' => ''
+        );
+    }else{
+        $jewellery_array_code = array(
+            'stone' => '',
+            'stone_color' => '',
+            'stone_clarity' => '',
+            'stone_weight' => '',
+            'unit_copy' => ''
+        );
+    }
+
+
+?>
+<?php if ($_additional = $block->getAdditionalData()): ?>
+    <?php if($productType == 'watches'):?>
+        <?php $_additional = array_chunk($_additional,2);?>
+        <div class="prodAttribList">
+            <?php foreach ($_additional as $_val): ?>
+                <ul>
+                    <?php foreach($_val as $_data) : ?>
+                        <li>
+                            <strong><?php echo $block->escapeHtml(__($_data['label'])) ?>:</strong>
+                            <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_data['value'], $_data['code']) ?>
+                        </li>
+                    <?php endforeach;?>
+                </ul>
+            <?php endforeach; ?>
+        </div>
+    <?php else:?>
+        <?php if($_product->getAttributeText('online_product') == 'Yes' && ($website_id == 7 || $website_id == 6)):?>
+            <div class="prodAttribList">
+                <p class="additional-attributes">
+                    <?php foreach($_additional as $key=>$_data){
+                        if(isset($jewellery_array_code[$key])){
+                            if($key == 'unit'){
+                                $_data['value'] = $_data['value'].',</br>';
+                            }
+                            $jewellery_array_code[$key] =  $_data['value'];
+                        }
+                    }?>
+
+                    <?php foreach($jewellery_array_code as $k=>$v):?>
+                        <?php if($v !=''):?>
+                            <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $v, $k) ?>
+                        <?php endif;?>
+                    <?php endforeach;?>
+                </p>
+            </div>
+        <?php endif;?>
+    <?php endif;?>
+<?php endif;?>
+

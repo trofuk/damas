@@ -1,0 +1,53 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Product list toolbar
+ *
+ * @var $block \Magento\Catalog\Block\Product\ProductList\Toolbar
+ */
+use Magento\Catalog\Model\Product\ProductList\Toolbar;
+
+//$block->setDefaultOrder('name');
+//$block->setDefaultDirection('asc');
+$sort = $this->getRequest()->getParam('product_list_order');
+$dir = $this->getRequest()->getParam('product_list_dir');
+$online = $this->getRequest()->getParam('online_product');
+$category_helper = $this->helper('Magento\Catalog\Helper\Data');
+$_web_helper = $this->helper('Dtrof\Catalog\Helper\Data');
+$categories = $_web_helper->categoryIds((int)$category_helper->getCategory()->getId());
+$website_id = $_web_helper->getCurrentWebsite();
+?>
+<div class="col-lg-3 col-md-4 col-sm-5 col-xs-6 select-wrap">
+    <label for="sorter"><?php /* @escapeNotVerified */ echo __('Sort By') ?></label>
+    <select id="sorter" data-role="sorter" class="sorter-options" data-placeholder="All products">
+        <option value="" <?php echo ($sort == '' && $dir == '')? 'selected="selected"' :''?>>
+            <?php echo __('Default');?>
+        </option>
+        <option value="name&product_list_dir=asc" <?php echo ($sort == 'name' && $dir == 'asc')? 'selected="selected"' :''?>>
+            <?php echo __('Name A-Z');?>
+        </option>
+        <option value="name&product_list_dir=desc" <?php echo ($sort == 'name' && $dir == 'desc')? 'selected="selected"' :''?>>
+            <?php echo __('Name Z-A');?>
+        </option>
+        <?php if($website_id == 7 || $website_id == 6):?>
+            <?php if(!in_array(59,$categories)):?>
+                <?php if(empty($online) || $online == '169' ):?>
+                <option value="price&product_list_dir=asc" <?php echo ($sort == 'price' && $dir == 'asc')? 'selected="selected"' :''?>>
+                    <?php echo __('Price: Low to High');?>
+                </option>
+                <option value="price&product_list_dir=desc" <?php echo ($sort == 'price' && $dir == 'desc')? 'selected="selected"' :''?>>
+                    <?php echo __('Price: High to Low');?>
+                </option>
+                <?php endif;?>
+            <?php endif;?>
+        <?php endif;?>
+    </select>
+</div>

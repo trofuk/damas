@@ -1,0 +1,13 @@
+<div class="productInfoButtons">
+    <div class="leftBlock col-md-6">
+        <div class="toggle-360"></div>
+    </div>
+    <div class="rightBlock col-md-6">
+        <?php $_product = $block->getProduct() ?>
+        <?php if ($block->canEmailToFriend()): ?>
+            <a href="<?php /* @escapeNotVerified */ echo $this->helper('Magento\Catalog\Helper\Product')->getEmailToFriendUrl($_product) ?>"
+               class="action mailto friend sendMail"></a>
+        <?php endif; ?>
+        <a href="#" class="printPage"></a>
+    </div>
+</div>

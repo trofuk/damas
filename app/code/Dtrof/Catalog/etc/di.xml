@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Created by wilson.sun330@gmail.com
+ * Date: 13/05/2015
+ * Time: 5:02 PM
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Catalog\Block\Product\ProductList\Toolbar" type="Dtrof\Catalog\Block\Product\ProductList\Toolbar" />
+    <preference for="Magento\Catalog\Block\Product\ListProduct" type="Dtrof\Catalog\Block\Product\ListProduct" />
+    <preference for="Magento\Catalog\Block\Product\View\Options" type="Dtrof\Catalog\Block\Product\View\Options" />
+    <preference for="Magento\Catalog\Block\Product\View" type="Dtrof\Catalog\Block\Product\View" />
+    <preference for="Magento\Catalog\Block\Product\View\Options\Type\DefaultType" type="Dtrof\Catalog\Block\Product\View\Options\Type\DefaultType" />
+    <preference for="Magento\Catalog\Block\Product\View\Options\Type\Text" type="Dtrof\Catalog\Block\Product\View\Options\Type\Text" />
+    <preference for="Magento\Catalog\Block\Product\View\Options\Type\File" type="Dtrof\Catalog\Block\Product\View\Options\Type\File" />
+    <preference for="Magento\Catalog\Block\Product\View\Options\Type\Select" type="Dtrof\Catalog\Block\Product\View\Options\Type\Select" />
+    <preference for="Magento\Catalog\Block\Product\View\Options\Type\Date" type="Dtrof\Catalog\Block\Product\View\Options\Type\Date" />
+    <preference for="Magento\Catalog\Block\Product\View\Options\AbstractOptions" type="Dtrof\Catalog\Block\Product\View\Options\AbstractOptions" />
+    <preference for="Magento\Catalog\Block\Product\ProductList\Related" type="Dtrof\Catalog\Block\Product\ProductList\Related" />
+</config>

@@ -1,0 +1,13 @@
+<?php
+$points = $block->getClientLocation();
+?>
+<h1><?php echo __('Direction');?></h1>
+<?php if(!empty($points['from']) && !empty($points['to'])):?>
+    <div id="map-canvas" style="width: 500px; height: 500px; margin: 0 auto;"></div>
+    <script>
+        var points = <?php echo  json_encode($points)?>
+    </script>
+<?php else: ?>
+    <?php echo __('We can`t find your location');?>
+<?php endif;?>
+

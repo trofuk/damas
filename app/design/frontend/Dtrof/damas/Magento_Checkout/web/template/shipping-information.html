@@ -1,0 +1,30 @@
+<li id="shipping_information">
+    <div class="c-step-title">SHIPPING ADDRESS<a href="#" class="back-step"  data-bind="click: navigateToPrevStep">previous step<i class="icon-arrow-top"></i></a></div>
+    <div class="c-step-content">
+        <div class="col-md-12">
+            <form class="form form-shipping-address" id="co-shipping-form" data-bind="attr: {'data-hasrequired': $t('* Required Fields')}">
+                <!-- ko foreach: getRegion('before-fields') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+                <!--/ko-->
+                <div id="shipping-new-address-form" class="fieldset address">
+                    <!-- ko foreach: getRegion('additional-fieldsets') -->
+                    <!-- ko template: getTemplate() --><!-- /ko -->
+                    <!--/ko-->
+                    <!-- ko if: (isCustomerLoggedIn) -->
+                    <div class="field choice" data-bind="visible: !isFormInline">
+                        <input type="checkbox" class="checkbox" id="shipping-save-in-address-book" data-bind="checked: saveInAddressBook" />
+                        <label class="label" for="shipping-save-in-address-book">
+                            <span data-bind="i18n: 'Save in address book'"></span>
+                        </label>
+                    </div>
+                    <!-- /ko -->
+                </div>
+            </form>
+
+            <p>Select a billing address from your address book or enter a new address.</p>
+            <div class="input-group">
+                <button class="btn-dark btn-big" data-bind="click: navigateToNextStep">Continue</button>
+            </div>
+        </div>
+    </div>
+</li>

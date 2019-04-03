@@ -1,0 +1,80 @@
+<?php
+$productId = (int)$this->getRequest()->getParam('id');
+$product = $this->getProductById($productId);
+?>
+
+<div>
+    <section id="sendCallback" class="requestToContact">
+        <h2><?php echo __('Request to callback');?></h2>
+        <p class="productName"><?php echo $product->getName();?></p>
+        <form method="post"
+              action="/ajax/mail/callback"
+              id="form-validate"
+              enctype="multipart/form-data"
+              autocomplete="off"
+              data-mage-init='{"validation":{}}'
+              class="form-registr form create account form-create-account callbackForm ">
+            <div class="input-group">
+                <input class="input-text required-entry"
+                       autocomplete="off"
+                       data-validate="{required:true}"
+                       type="text"
+                       name="firstname"
+                       maxlength="50"
+                       required>
+                <label class="control-label" for="firstname"><?php echo __('Enter your name');?></label>
+            </div>
+            <div class="input-group telephone required">
+                <input class="input-text required-entry <?php /* @escapeNotVerified */ echo $this->helper('Magento\Customer\Helper\Address')->getAttributeValidationClass('telephone') ?>"
+                       autocomplete="off"
+                       id="telephone"
+                       type="tel"
+                       pattern="^[ 0-9]+$"
+                       data-validate="{phoneUK:true}"
+                       name="telephone"
+                       maxlength="30"
+                       required>
+                <label class="control-label" for="telephone"><?php echo __('Enter your phone number');?></label>
+            </div>
+            <input type="hidden" name="product-name" value="<?php echo  $product->getName();?>">
+            <input type="hidden" name="product-url" value="<?php echo $product->getProductUrl();?>">
+            <div class="input-group">
+                <button type="submit" title="" class="button-gold color-dark action submit primary"><?php echo __('Send');?></button>
+            </div>
+        </form>
+    </section>
+</div>
+<script>
+    require([
+        'jquery',
+        'mage/mage',
+        'jqueryForm'
+    ], function($){
+        var form = $('.callbackForm');
+        var ignore = null;
+
+        form.ajaxForm({
+            dataType: 'html',
+            type: 'post',
+            beforeSubmit: function(){
+                var  phone_number = $('#telephone').val();
+                $('#telephone').removeClass('mage-error');
+                $('#phone-address-error').remove();
+                if(!phone_number.match(/([0-9\\s+]+)/)){
+                    $('#telephone').addClass('mage-error');
+                    $('#telephone').after('<div generated="true" class="mage-error" id="phone-address-error">' +
+                        '<?php echo __("Please enter a valid number in this field.")?>' +
+                        '</div>');
+                    return false;
+                }
+
+            },
+            success: function(data)
+            {
+                $.fancybox.close();
+            }
+        });
+
+
+    });
+</script>

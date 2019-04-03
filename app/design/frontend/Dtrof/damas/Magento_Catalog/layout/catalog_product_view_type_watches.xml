@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!--<move element="content" destination="watches.container"/>-->
+        <!--<move element="product.info.main" destination="watch.info.container"/>-->
+        <referenceContainer name="content">
+
+            <container name="watch.info.wrapper" htmlTag="div" htmlClass="productMainWrap categorypath-watches" label="Watch Info Wrapper">
+                <block class="Magento\Theme\Block\Html\Title" name="page.main.title" template="html/title.phtml" before="-"/>
+                <container name="watch.info.container"  label="Watch Info Container" htmlTag="div" htmlClass="productMainInfo container">
+                    <container name="watch.info.row"  label="Watch Info row" htmlTag="div" htmlClass="row">
+                        <container name="product.info.main" htmlTag="div" htmlClass="product-info-main col-md-6" after="page.main.title">
+                            <container name="product.top.info" label="Product Top Info" htmlTag="div" htmlClass="topInfo row" before="-">
+                                <container name="product.info.stock.sku" label="Product auxiliary info" htmlTag="div" htmlClass="productSku col-xs-6">
+                                    <referenceContainer name="product.info.type" display="false"/>
+                                    <referenceBlock name="product.info.mailto" display="false"/>
+                                    <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.sku" template="product/view/custom_attribute.phtml">
+                                        <arguments>
+                                            <argument name="at_call" xsi:type="string">getSku</argument>
+                                            <argument name="at_code" xsi:type="string">sku</argument>
+                                            <argument name="css_class" xsi:type="string">sku</argument>
+                                            <argument name="at_label" xsi:type="string">default</argument>
+                                            <argument name="add_attribute" xsi:type="string">itemprop="sku"</argument>
+                                        </arguments>
+                                    </block>
+                                </container>
+                                <container name="product.info.social" label="Product social links container" htmlTag="div" htmlClass="socialLinks col-xs-6" >
+                                    <block class="Magento\Catalog\Block\Product\View" name="product.info.share" template="product/view/share_links.phtml"/>
+                                </container>
+                            </container>
+                            <container name="product.info.buttons" htmlTag="div" htmlClass="prodButtons" after="product.info.description">
+                                <block class="Magento\Catalog\Block\Product\View" name="product.info.getitem" as="getitem" template="product/view/getitem.phtml" />
+                                <block class="Magento\Catalog\Block\Product\View" name="product.info.addto" as="addto" template="product/view/addto.phtml" />
+                            </container>
+                            <container name="product.container.right.info" label="Product Right Info" htmlTag="div" htmlClass="prodDescription">
+                                <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.description" template="product/view/attribute.phtml" group="detailed_info">
+                                    <arguments>
+                                        <argument name="at_call" xsi:type="string">getDescription</argument>
+                                        <argument name="at_code" xsi:type="string">description</argument>
+                                        <argument name="css_class" xsi:type="string">description</argument>
+                                        <argument name="at_label" xsi:type="string">none</argument>
+                                        <argument name="title" translate="true" xsi:type="string">Details</argument>
+                                    </arguments>
+                                </block>
+                            </container>
+                            <container name="product.container.buttons.info" label="Product Buttons Info" htmlTag="div" htmlClass="prodDescription">
+                                <block class="Magento\Catalog\Block\Product\View" name="product.info.review" template="product/view/review.phtml" after="product.info.addto" />
+                            </container>
+                        </container>
+
+                        <container name="product.info.media" htmlTag="div" htmlClass="product-media col-md-6" before="product.info.main">
+                            <block class="Magento\Catalog\Block\Product\View" name="product.info.image.buttons" template="product/view/buttons.phtml"/>
+                            <block class="Magento\Catalog\Block\Product\View\Gallery" name="product.info.media.image" template="product/view/gallery.phtml"/>
+                        </container>
+                    </container>
+                </container>
+                <!--<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.details" template="product/view/details.phtml" after="product.info.media">-->
+                <!--<container name="product.info.details" label="Product Info Details" htmlTag="div" htmlClass="product-info-details descriptionTabs container">-->
+                    <!--<container name="product.info.tab.navigation" label="Product Info Details Tab Navigation" htmlTag="div" htmlClass="tabsNavigation" before="-">-->
+                        <!--<block name="product.info.tab.template" class="Magento\Catalog\Block\Product\View" template="product/view/watches_tabs.phtml" before="-" />-->
+                    <!--</container>-->
+                    <!--<container name="product.info.tab.content" label="Priduct Info Tab Content" htmlTag="div" htmlClass="tabContent" after="product.info.tab.navigation">-->
+                        <!--<block class="Magento\Catalog\Block\Product\View\Attributes" name="product.attributes" as="additional" template="product/view/attributes.phtml" group="detailed_info" before="-">-->
+                            <!--<arguments>-->
+                                <!--<argument translate="true" name="title" xsi:type="string">GENERAL INFORMATION:</argument>-->
+                            <!--</arguments>-->
+                        <!--</block>-->
+                        <!--<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.dial" template="product/view/attribute_no_wrap.phtml" group="detailed_info" after="product.attributes">-->
+                            <!--<arguments>-->
+                                <!--<argument name="at_call" xsi:type="string">getWatchesDialAndHands</argument>-->
+                                <!--<argument name="at_code" xsi:type="string">watches_dial_and_hands</argument>-->
+                                <!--<argument name="css_class" xsi:type="string">watches_dial_and_hands</argument>-->
+                            <!--</arguments>-->
+                        <!--</block>-->
+                        <!--<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.functions" template="product/view/attribute_no_wrap.phtml" group="detailed_info" after="product.info.dial">-->
+                            <!--<arguments>-->
+                                <!--<argument name="at_call" xsi:type="string">getWatchesMovementAndFunctions</argument>-->
+                                <!--<argument name="at_code" xsi:type="string">watches_movement_and_functions</argument>-->
+                                <!--<argument name="css_class" xsi:type="string">watches_movement_and_functions</argument>-->
+                            <!--</arguments>-->
+                        <!--</block>-->
+                        <!--<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.bracelet" template="product/view/attribute_no_wrap.phtml" group="detailed_info" after="product.info.functions">-->
+                            <!--<arguments>-->
+                                <!--<argument name="at_call" xsi:type="string">getWatchesBracelet</argument>-->
+                                <!--<argument name="at_code" xsi:type="string">watches_bracelet</argument>-->
+                                <!--<argument name="css_class" xsi:type="string">watches_bracelet</argument>-->
+                            <!--</arguments>-->
+                        <!--</block>-->
+                    <!--</container>-->
+                <!--</container>-->
+                <referenceContainer name="product.info.details" remove="true" />
+                <container name="related.products.wrapper" label="Related Products Wrapper" htmlTag="div" htmlClass="items-wrap container">
+                    <container name="related.products.block" label="Related Products Block" htmlTag="div" htmlClass="filtered-results">
+                        <block class="Dtrof\Catalog\Block\Product\ProductList\Related" name="catalog.product.related" template="Magento_Catalog::product/list/items.phtml">
+                            <arguments>
+                                <argument name="type" xsi:type="string">related</argument>
+                            </arguments>
+                        </block>
+                        <block class="Dtrof\Catalog\Block\Product\ProductList\Upsell" name="product.info.upsell" template="Magento_Catalog::product/list/items.phtml">
+                            <arguments>
+                                <argument name="type" xsi:type="string">upsell</argument>
+                            </arguments>
+                        </block>
+                    </container>
+                </container>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

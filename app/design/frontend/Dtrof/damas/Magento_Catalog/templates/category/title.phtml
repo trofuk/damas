@@ -1,0 +1,5 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');//get current category
+?>
+<h1 data-cat="<?php echo $category->getId();?>"><?php echo $category->getName(); ?></h1>

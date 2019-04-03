@@ -1,0 +1,22 @@
+<?php
+$categoryId = (int)$this->getRequest()->getParam('id');
+$id = ($categoryId > 0)? $categoryId:'';
+?>
+<div>
+    <section class="giftAdvisor" id="giftAdvisor">
+        <h1><?php echo __('DO YOU WANT TO USE THE GIFT ADVISOR?');?></h1>
+        <div class="buttons-wrap">
+            <button class="button-gold color-dark showAdvisor" onclick="location.href='/gifts?id=<?php echo $id;?>'">
+                <?php echo __('Yes, I want to use');?>
+            </button>
+        </div>
+        <div class="caption-wrap">
+            <p>or</p>
+        </div>
+        <div class="buttons-wrap">
+            <button class="button-gold color-dark-reverse" onclick="location.href='/gifts.html'">
+                <?php echo __('skip this step');?>
+            </button>
+        </div>
+    </section>
+</div>

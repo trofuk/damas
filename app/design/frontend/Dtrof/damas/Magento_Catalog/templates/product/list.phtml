@@ -1,0 +1,430 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+use Magento\Framework\App\Action\Action;
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @var $block \Magento\Catalog\Block\Product\ListProduct
+ */
+?>
+<?php
+$_productCollection = $block->getLoadedProductCollection();
+
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$_web_helper = $this->helper('Dtrof\Catalog\Helper\Data');
+$website_id = $_web_helper->getCurrentWebsite();
+?>
+<?php if (!$_productCollection->count()): ?>
+
+    <div class="message-info-empty"><div><?php /* @escapeNotVerified */ echo __('We can\'t find products matching the selection.') ?></div></div>
+
+<?php else: ?>
+    <?php echo $block->getAdditionalHtml() ?>
+    <?php
+    if ($block->getMode() == 'grid') {
+        $viewMode = 'grid';
+        $image = 'category_page_grid';
+        $showDescription = false;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+    } else {
+        $viewMode = 'list';
+        $image = 'category_page_list';
+        $showDescription = true;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
+    }
+    /**
+     * Position for actions regarding image size changing in vde if needed
+     */
+    $pos = $block->getPositioned(); ?>
+    <div class="products <?php /* @escapeNotVerified */ echo $viewMode; ?> products-<?php /* @escapeNotVerified */ echo $viewMode; ?>">
+        <?php foreach ($_productCollection as $_product) : ?>
+            <?php
+            $productType = $_product->getTypeId();
+            $attributes = array();
+            $block->setProduct($_product);
+            if($productType != 'watches') {
+                $metalType = $block->getMetalType($_product);
+//                $childInfo = $block->getChildInfo($_product, $image);
+                $attribute = $block->getAdditionalData(array('metal_purity','metal_color','metal_type','main_stone_type','stone'));
+                if(!empty($attribute)){
+                    $metal_purity = (!empty($attribute['metal_purity']['value']))?$attribute['metal_purity']['value'].' ':'';
+                    $metal_color = (!empty($attribute['metal_color']['value']))?$attribute['metal_color']['value'].' ':'';
+                    $metal_type = (!empty($attribute['metal_type']['value']))?$attribute['metal_type']['value'].' ':'';
+                    $main_stone_type = (!empty($attribute['main_stone_type']['value']))?$attribute['main_stone_type']['value'].' ':'';
+                    $stone = (!empty($attribute['stone']['value']))?', '.$attribute['stone']['value']:'';
+                    $attributes = array(
+                        $metal_purity.''.$metal_color.''.$metal_type,
+                        $main_stone_type.''.$stone
+                    );
+                }
+            }else{
+                $attribute = $block->getAdditionalData(array('watches_metal_purity',
+                        'watches_metal_color',
+                        'watches_metal_type',
+                        'watches_stone_type')
+                );
+                if(!empty($attribute)){
+                    $metal_purity = (!empty($attribute['watches_metal_purity']['value']))?$attribute['watches_metal_purity']['value'].' ':'';
+                    $metal_color = (!empty($attribute['watches_metal_color']['value']))?$attribute['watches_metal_color']['value'].' ':'';
+                    $metal_type = (!empty($attribute['watches_metal_type']['value']))?$attribute['watches_metal_type']['value'].' ':'';
+                    $stone_type = (!empty($attribute['watches_stone_type']['value']))?$attribute['watches_stone_type']['value'].' ':'';
+                    $attributes = array(
+                        $metal_purity.''.$metal_color.''.$metal_type,
+                        $stone_type
+                    );
+                }
+            }
+
+            $productImage = $block->getImage($_product, $image);
+            $_productNameStripped = $block->stripTags($_product->getName(), null, true);
+            $_helper2 = $this->helper('Magento\Catalog\Helper\Image');
+            $image360 = $block->getRenderedHtml($_product);
+            ?>
+            <?php if($viewMode == 'list') : ?>
+                <?php if($productType == 'watches') : ?>
+                    <div class="itemList itemNewWrap WatchWrap">
+                        <div class="itemList-leftPart">
+                            <div class="leftPart-topBlock">
+                                <?php if(!empty($attributes)) : ?>
+                                    <a class="show-item-details"></a>
+                                <?php endif; ?>
+                                <?php if($image360 != ''):?>
+                                    <a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" class="toggle-360"></a>
+                                <?php endif;?>
+                            </div>
+                            <div class="item-view-img">
+                                <?php include ($block->getTemplateFile('MagicToolbox_Magic360::product/view/gallery_list.phtml')); ?>
+                                <?php if(!empty($attributes)) : ?>
+                                    <div class="item-details-popup">
+                                        <ul>
+                                            <?php foreach($attributes  as $key =>$_data) : ?>
+                                                <li>
+                                                    <span><?php echo $_data;?><?php echo ($key == 0 && !empty($attributes[1]))?', ':'';?></span>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="itemList-rightPart">
+                            <div class="item-description">
+                                <a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" title="<?php /* @escapeNotVerified */ echo $_productNameStripped ?>">
+                                    <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
+                                </a>
+                            </div>
+                            <?php if ($showDescription): ?>
+                                <div class="item-details-list">
+                                    <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+                                </div>
+                            <?php endif; ?>
+
+                            <div class="buttons-wrap">
+                                <a href="/ajax/popup/item/?id=<?=$_product->getId()?>" class="button-gold color-dark item-get-this productItemPopup"><?php echo $block->escapeHtml(__('Request for quote')); ?></a>
+                                <div class="additional-details-wrap">
+                                    <?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()): ?>
+                                        <a href="#"
+                                           class="action towishlist like-this"
+                                           title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+                                           aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+                                           data-post='<?php /* @escapeNotVerified */ echo $block->getAddToWishlistParams($_product); ?>'
+                                           data-action="add-to-wishlist"
+                                           role="button"></a>
+                                    <?php endif; ?>
+                                    <a class="quick-view fancybox-ajax" data-fancybox-type="iframe" href="/ajax/quickview/product/?id=<?=$_product->getId()?>"></a>
+                                    <a href="#" class="share-this"></a>
+                                    <?php include ($block->getTemplateFile('Magento_Catalog::product/share.phtml')) ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php else : ?>
+                    <div class="itemList itemNewWrap">
+                        <div class="itemList-leftPart">
+                            <div class="leftPart-topBlock">
+                                <?php if(!empty($metalType)) : ?>
+                                    <div class="select-wrap">
+                                        <select name="super_attribute[168]"
+                                                data-validate="{required:true}"
+                                                id="attribute168"
+                                                data-placeholder="<?=__('Choose '.$metalType['label'].'');?>"
+                                                class="orange-sel get-conf-attr">
+                                            <option></option>
+                                            <?php foreach($metalType['options'] as $item) : ?>
+                                                <option value="<?=$item['product_id']?>" data-attr="<?=$item['value']?>">
+                                                    <?=$item['label']?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if(!empty($attributes)) : ?>
+                                    <a class="show-item-details"></a>
+                                <?php endif; ?>
+                                <?php if($image360 != ''):?>
+                                    <a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" class="toggle-360"></a>
+                                <?php endif;?>
+                            </div>
+                            <div class="item-view-img">
+                                <?php include ($block->getTemplateFile('MagicToolbox_Magic360::product/view/gallery_list.phtml')); ?>
+                                <?php if(!empty($attributes)) : ?>
+                                    <div class="item-details-popup">
+                                        <ul>
+                                            <?php foreach($attributes  as $key => $_data) : ?>
+                                                <li>
+                                            <span>
+                                                 <?php echo $_data;?><?php echo ($key == 0 && !empty($attributes[1]))?', ':'';?>
+                                            </span>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="itemList-rightPart">
+                            <div class="item-description">
+                                <a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" title="<?php /* @escapeNotVerified */ echo $_productNameStripped ?>">
+                                    <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
+                                </a>
+                            </div>
+                            <?php if($website_id == 7 || $website_id == 6):?>
+                                <div class="item-price">
+                                    <?php echo $block->getReviewsSummaryHtml($_product, $templateType); ?>
+                                    <?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
+                                    <?php echo $block->getProductDetailsHtml($_product); ?>
+                                </div>
+                            <?php endif;?>
+
+                            <?php if ($showDescription): ?>
+                                <div class="item-details-list">
+                                    <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+                                </div>
+                            <?php endif; ?>
+
+                            <div class="buttons-wrap">
+                                <?php $postParams = $block->getAddToCartPostParams($_product); ?>
+                                <form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
+                                    <input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
+                                    <input type="hidden" name="<?php /* @escapeNotVerified */ echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php /* @escapeNotVerified */ echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
+                                    <input type="hidden" name="qty" id="qty" value="1" class="input-text qty">
+                                    <?php if(!empty($metalType)):?>
+                                        <input type="hidden" name="selected_configurable_option" value="">
+                                        <input type="hidden" class="super_attribute" name="super_attribute[<?php echo $metalType['id']?>]" value="">
+                                    <?php endif;?>
+                                    <?php echo $block->getBlockHtml('formkey');?>
+
+                                    <?php if($_product->getAttributeText('online_product') == 'Yes' && ($website_id == 7 || $website_id == 6)):?>
+                                        <button type="submit"
+                                                title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
+                                                class="action tocart primary button-gold color-dark item-get-this">
+                                            <span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span>
+                                        </button>
+                                    <?php else: ?>
+                                        <div class="buttons-wrap">
+                                            <a href="/ajax/popup/item/?id=<?=$_product->getId()?>" class="button-gold color-dark item-get-this productItemPopup"><?php echo $block->escapeHtml(__('get this item')); ?></a>
+                                        </div>
+                                    <?php endif; ?>
+
+                                </form>
+
+                                <div class="additional-details-wrap">
+                                    <?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()): ?>
+                                        <a href="#"
+                                           class="action towishlist like-this"
+                                           title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+                                           aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+                                           data-post='<?php /* @escapeNotVerified */ echo $block->getAddToWishlistParams($_product); ?>'
+                                           data-action="add-to-wishlist"
+                                           role="button"></a>
+                                    <?php endif; ?>
+                                    <a class="quick-view fancybox-ajax" data-fancybox-type="iframe" href="/ajax/quickview/product/?id=<?=$_product->getId()?>"></a>
+                                    <a href="#" class="share-this"></a>
+                                    <?php include ($block->getTemplateFile('Magento_Catalog::product/share.phtml')) ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            <?php else : ?>
+                <?php if($productType == 'watches') : ?>
+                    <div class="item itemNewWrap WatchWrap">
+                        <div class="item-absolute">
+                            <div class="select-wrap-static">
+                                <div class="select-wrap">
+                                    <?php if(!empty($attributes)) : ?>
+                                        <a class="show-item-details"></a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <?php if($image360 != ''):?>
+                                <a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" class="toggle-360"></a>
+                            <?php endif;?>
+                            <div class="item-view-wrap-static">
+                                <?php if(!empty($attributes)) : ?>
+                                    <div class="item-details-popup">
+                                        <ul>
+                                            <?php foreach($attributes  as $key => $_data) : ?>
+                                                <li>
+                                                    <!--                                                    <span>--><?php ///* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_data['value'], $_data['code']) ?><!--</span>-->
+                                                    <span><?php echo $_data;?><?php echo ($key == 0 && !empty($attributes[1]))?', ':'';?></span>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+                                <?php endif; ?>
+                                <?php include ($block->getTemplateFile('Magento_Catalog::product/share.phtml')) ?>
+                                <div class="item-view-wrap">
+                                    <div class="round-view">
+                                        <?php include ($block->getTemplateFile('MagicToolbox_Magic360::product/view/gallery_list.phtml')); ?>
+                                    </div>
+                                    <div class="additional-details-wrap">
+                                        <div class="bottom-controls">
+                                            <?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()): ?>
+                                                <a href="#"
+                                                   class="action towishlist like-this"
+                                                   title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+                                                   aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+                                                   data-post='<?php /* @escapeNotVerified */ echo $block->getAddToWishlistParams($_product); ?>'
+                                                   data-action="add-to-wishlist"
+                                                   role="button"></a>
+                                            <?php endif; ?>
+                                            <a class="quick-view fancybox-ajax" data-fancybox-type="iframe" href="/ajax/quickview/product/?id=<?=$_product->getId()?>"></a>
+                                            <a href="#" class="share-this"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" title="<?php /* @escapeNotVerified */ echo $_productNameStripped ?>">
+                                    <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
+                                </a>
+                            </div>
+                            <div class="buttons-wrap">
+                                <a href="/ajax/popup/item/?id=<?=$_product->getId()?>" class="button-gold color-dark item-get-this productItemPopup"><?php echo $block->escapeHtml(__('Request for quote')); ?></a>
+                            </div>
+                        </div>
+                    </div>
+                <?php else : ?>
+                    <div class="item itemNewWrap">
+                        <div class="item-absolute">
+                            <div class="select-wrap-static">
+                                <div class="select-wrap">
+                                    <?php if(!empty($metalType)) : ?>
+                                        <select name="super_attribute[168]"
+                                                data-validate="{required:true}"
+                                                id="attribute168"
+                                                data-placeholder="<?=__('Choose '.$metalType['label'].'');?>"
+                                                class="orange-sel get-conf-attr">
+                                            <option></option>
+                                            <?php foreach($metalType['options'] as $item) : ?>
+                                                <option value="<?=$item['product_id']?>"  data-attr="<?=$item['value']?>"><?=$item['label']?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    <?php endif; ?>
+                                    <?php if(!empty($attributes)) : ?>
+                                        <a class="show-item-details"></a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <?php if($image360 != ''):?>
+                                <a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" class="toggle-360"></a>
+                            <?php endif; ?>
+                            <div class="item-view-wrap-static">
+                                <?php if(!empty($attributes)) : ?>
+                                    <div class="item-details-popup">
+                                        <ul>
+                                            <?php foreach($attributes  as $key => $_data) : ?>
+                                                <li>
+                                                    <!--                                                    <span>--><?php ///* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_data['value'], $_data['code']) ?><!--</span>-->
+                                                    <span><?php echo $_data;?><?php echo ($key == 0 && !empty($attributes[1]))?', ':'';?></span>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+                                <?php endif; ?>
+                                <?php include ($block->getTemplateFile('Magento_Catalog::product/share.phtml')) ?>
+                                <div class="item-view-wrap">
+                                    <div class="round-view">
+                                        <?php include ($block->getTemplateFile('MagicToolbox_Magic360::product/view/gallery_list.phtml')); ?>
+                                    </div>
+                                    <div class="additional-details-wrap">
+                                        <div class="bottom-controls">
+                                            <?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()): ?>
+                                                <a href="#"
+                                                   class="action towishlist like-this"
+                                                   title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+                                                   aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+                                                   data-post='<?php /* @escapeNotVerified */ echo $block->getAddToWishlistParams($_product); ?>'
+                                                   data-action="add-to-wishlist"
+                                                   role="button"></a>
+                                            <?php endif; ?>
+                                            <a class="quick-view fancybox-ajax" data-fancybox-type="iframe" href="/ajax/quickview/product/?id=<?=$_product->getId()?>"></a>
+                                            <a href="#" class="share-this"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" title="<?php /* @escapeNotVerified */ echo $_productNameStripped ?>">
+                                    <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
+                                </a>
+                            </div>
+                            <?php if($website_id == 7 || $website_id == 6):?>
+                                <div class="item-price">
+                                    <?php echo $block->getReviewsSummaryHtml($_product, $templateType); ?>
+                                    <?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
+                                    <?php echo $block->getProductDetailsHtml($_product); ?>
+                                </div>
+                            <?php endif;?>
+                            <div class="buttons-wrap">
+                                <?php $postParams = $block->getAddToCartPostParams($_product); ?>
+                                <form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
+                                    <input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
+                                    <input type="hidden" name="qty" id="qty" value="1" class="input-text qty">
+                                    <?php if(!empty($metalType)):?>
+                                        <input type="hidden" name="selected_configurable_option" value="">
+                                        <input type="hidden" class="super_attribute" name="super_attribute[<?php echo $metalType['id']?>]" value="">
+                                    <?php endif;?>
+                                    <input type="hidden" name="<?php /* @escapeNotVerified */ echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php /* @escapeNotVerified */ echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
+
+                                    <?php echo $block->getBlockHtml('formkey');?>
+                                    <?php if($_product->getAttributeText('online_product') == 'Yes' && ($website_id == 7 || $website_id == 6)):?>
+                                        <button type="submit"
+                                                title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
+                                                class="action tocart primary button-gold color-dark item-get-this">
+                                            <span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span>
+                                        </button>
+                                    <?php else: ?>
+                                        <div class="buttons-wrap">
+                                            <a href="/ajax/popup/item/?id=<?=$_product->getId()?>" class="button-gold color-dark item-get-this productItemPopup"><?php echo $block->escapeHtml(__('get this item')); ?></a>
+                                        </div>
+                                    <?php endif; ?>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
+    <?php echo $block->getToolbarHtml() ?>
+
+    <?php if (!$block->isRedirectToCartEnabled()) : ?>
+        <script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form], .form.map.checkout": {
+                "catalogAddToCart": {}
+            }
+        }
+        </script>
+    <?php endif; ?>
+<?php endif; ?>

@@ -1,0 +1,31 @@
+<?php $postParams = $block->getAddToCartPostParams($_product); ?>
+<form action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post"
+      id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+    <input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $_product->getId() ?>" />
+    <input type="hidden" name="selected_configurable_option" value="" />
+    <input type="hidden" name="related_product" id="related-products-field" value="" />
+    <input type="hidden" name="qty" id="qty"  value="1" class="input-text qty" >
+    <?php include ($block->getTemplateFile('Dtrof_Ajax::product/attributes.phtml')) ?>
+    <?php if($productType != 'watches' && $_product->getAttributeText('online_product') == 'Yes') : ?>
+    <div class="priceWrap">
+        <div class="product-info-price">
+            <div class="price-box price-final_price">
+                <span class="special-price mainPrice">
+                    <span class="price-container">
+                        <span  id="product-price-<?php echo $_product->getid(); ?>">
+                            <span class="price"><?php echo $_product->getFormatedPrice(); ?></span>
+                        </span>
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="prodButtons">
+<!--        --><?php //include ($block->getTemplateFile('Dtrof_Ajax::product/addtocart.phtml')) ?>
+    <?php else : ?>
+    <div class="prodButtons">
+        <a href="/stores" class="addToCart button-gold color-dark big"><?php echo __('Find Nearby Store'); ?></a>
+    <?php endif; ?>
+<!--        --><?php //include ($block->getTemplateFile('Dtrof_Ajax::product/addtowithlist.phtml')) ?>
+    </div>
+</form>

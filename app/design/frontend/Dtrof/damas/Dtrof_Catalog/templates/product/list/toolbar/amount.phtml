@@ -1,0 +1,27 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php $_productCollection = $this->getLoadedProductCollection();
+$count = $_productCollection->getSize(); ?>
+<div class="showing">
+    <p><?php /* @escapeNotVerified */ echo __('Showing') ?>:
+        <?php if ($block->getLastPageNum() > 1): ?>
+            <?php /* @escapeNotVerified */ echo __('Items %1-%2 of %3',
+                '<span class="toolbar-number">' . $block->getFirstNum() . '</span>',
+                '<span class="toolbar-number">' . $block->getLastNum() . '</span>',
+                '<span class="toolbar-number">' . $count . '</span>') ?>
+        <?php elseif ($block->getTotalNum() == 1): ?>
+            <?php /* @escapeNotVerified */ echo __('%1 Item',
+                '<span class="toolbar-number">' . $count . '</span>') ?>
+        <?php else: ?>
+            <?php /* @escapeNotVerified */ echo __('%1 Items',
+                '<span class="toolbar-number">' . $count . '</span>') ?>
+        <?php endif; ?>
+    </p>
+</div>

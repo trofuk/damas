@@ -1,0 +1,53 @@
+<?php
+$productId = (int)$this->getRequest()->getParam('id');
+$product = $this->getProductById($productId);
+?>
+
+<div>
+    <section id="sendMail" class="requestToContact">
+        <h2><?php echo __('Send to email address');?></h2>
+        <p class="productName"><?php echo $product->getName();?></p>
+        <form action="/ajax/mail/mail"
+              method="post"
+              id="form-validate"
+              enctype="multipart/form-data"
+              data-mage-init='{"validation":{}}'
+              autocomplete="off"
+              class="form-registr form create account form-create-account mailForm">
+            <div class="input-group">
+                <input class="input-text required-entry"
+                       autocomplete="off"
+                       data-validate="{required:true}"
+                       type="text"
+                       required
+                       name="firstname">
+                <label class="control-label" for="firstname"><?php echo __('Enter your name');?></label>
+            </div>
+            <div class="input-group">
+                <input class="input-text required-entry"
+                       data-validate="{required:true, 'validate-email':true}"
+                       type="email"
+                       id="email_address"
+                       required
+                       name="email">
+                <label class="control-label" for="email"><?php echo __('Enter your e-mail');?></label>
+            </div>
+            <div class="input-group">
+                <input class="input-text required-entry"
+                       name="comment"
+                       id="comment"
+                       data-validate="{required:true}"
+                       required
+                       type="text">
+                <label class="control-label" for="comment"><?php echo __('Enter your message');?></label>
+            </div>
+            <input type="hidden" name="product-name" value="<?php echo  $product->getName();?>">
+            <input type="hidden" name="product-url" value="<?php echo $product->getProductUrl();?>">
+            <div class="input-group">
+                <button type="submit" title="" class="button-gold color-dark action submit primary">
+                    <?php echo __('Send');?>
+                </button>
+            </div>
+        </form>
+    </section>
+</div>

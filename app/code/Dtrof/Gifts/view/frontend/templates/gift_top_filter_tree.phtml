@@ -1,0 +1,31 @@
+<?php if(!empty($attributes['options'])):?>
+    <div class="selectFilter">
+        <p class="filterTitle"><?php echo $attributes['frontend_label'];?></p>
+        <div class="select-wrap">
+            <div class="site-selected">
+                        <span>
+                              <?php if($attributes['selected'] > 0): echo $block->getOptionName($attributes['attribute_code'], $attributes['selected']);
+                              else: echo __('Choose').' '.$attributes['frontend_label'];
+                              endif;?>
+                        </span>
+            </div>
+            <ul class="sites-options">
+                <?php foreach($attributes['options'] as $options):?>
+                    <li>
+                        <a href="<?=$attributes['url']?>&<?=$attributes['attribute_code']?>=<?=$options['option_id']?>"
+                           class="gift-link">
+                            <?php echo $options['value']?>
+                        </a>
+                    </li>
+                <?php endforeach;?>
+            </ul>
+        </div>
+    </div>
+    <div id="select_<?=$attributes['next_code']?>">
+        <?php
+        if($this->getRequest()->getParam($attributes['attribute_code'])) {
+            include ($block->getTemplateFile('Dtrof_Gifts::gift_top_filter_step.phtml'));
+        }
+        ?>
+    </div>
+<?php endif;?>

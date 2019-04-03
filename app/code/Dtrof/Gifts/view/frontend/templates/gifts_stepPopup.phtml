@@ -1,0 +1,61 @@
+<?php
+
+$params = $this->getRequest()->getParams();
+$attributes = [];
+if(!empty($params)){
+    $attributes = $block->getAttribute($params['configuration_id'],$params['attribute_id'],$params['parent_id']);
+}else{
+    $attributes = $block->getFirstStepCategories();
+}
+?>
+<?php if(!empty($attributes)):?>
+<div class="filterSections" id="gifts-popup-block">
+    <?php if(!empty($params)):?>
+        <a href="<?=$attributes['return_url']?>"
+           class="return">
+            <img src="<?php echo $block->getViewFileUrl('img/back-arrow.png') ?>" alt="return">
+        </a>
+    <?php else:?>
+        <a href="javascript:void(0);" class="return close-popup">
+            <img src="<?php echo $block->getViewFileUrl('img/back-arrow.png') ?>" alt="return">
+        </a>
+    <?php endif;?>
+
+    <h2><?=$attributes['frontend_label']?></h2>
+    <?php if(!empty($attributes['options'])):?>
+<!--        <p>--><?php //echo __('Select one of the options or select "show all gifts"');?><!--</p>-->
+        <div class="filterCircle">
+            <?php foreach($attributes['options'] as $key=>$val):?>
+                <?php if($attributes['last'] == 0):?>
+                    <a href="/gifts/advisor/steppopup<?=$block->createNextUrl($params,$attributes,$val);?>"
+                       class="gift-link filter-icon-block filterPopupGifts">
+                        <?php if(!empty($params['id'])):?>
+                            <span class="filter-icon-img" style="background-image: url(<?=$val['image'] ?>)"></span>
+                        <?php else:?>
+                            <span class="filter-icon-img filter-icon-img-main icon-<?=$val['root_cat']?>m"></span>
+                        <?php endif;?>
+                        <span class="filter-icon-title"><?=$val['value']?></span>
+                    </a>
+                <?php else:?>
+                    <?php $url = $block->getCategoryUrl();?>
+                    <a href="<?=$attributes['view_base_url'].''.$attributes['view_url']?>&<?=$attributes['attribute_code']?>=<?=$val['option_id']?>"
+                       class="gift-link filter-icon-block">
+                        <?php if(!empty($params['id'])):?>
+                            <span class="filter-icon-img" style="background-image: url(<?=$val['image'] ?>)"></span>
+                        <?php else:?>
+                            <span class="filter-icon-img filter-icon-img-main icon-<?=$val['root_cat']?>m"></span>
+                        <?php endif;?>
+                        <span class="filter-icon-title"><?=$val['value']?></span>
+                    </a>
+                <?php endif;?>
+            <?php endforeach;?>
+        </div>
+    <?php else:?>
+        <p><?php echo __('No available options for this attribute.');?></p>
+        <p><?php echo __('You can go back or choose "view all gifts"');?></p>
+    <?php endif;?>
+        <a href="<?=(!empty($params['id']))? $attributes['view_base_url'].''.$attributes['view_url']:'/gifts.html'?>"
+           class="filter-select-all button-gold"><?php echo __('select all');?>
+        </a>
+</div>
+<?php endif;?>

@@ -1,0 +1,22 @@
+
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product view template
+ *
+ * @var $block \Magento\Framework\View\Element\Template
+ */
+?>
+<section class="contactUsPopUp" id="contactUsPopUp">
+    <h1><?php echo __('Contact us');?></h1>
+    <div class="contactUs_container">
+        <?php echo  $block->getChildHtml('contact_info_block');?>
+        <?php echo  $block->getChildHtml('contact_form');?>
+    </div>
+</section>

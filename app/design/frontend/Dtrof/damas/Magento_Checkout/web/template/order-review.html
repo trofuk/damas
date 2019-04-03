@@ -1,0 +1,17 @@
+<li id="order_review">
+    <div class="c-step-title">order review
+        <a href="#" data-bind="click: navigateToPrevStep" class="back-step">
+            previous step
+            <i class="icon-arrow-top"></i>
+        </a>
+    </div>
+    <div class="c-step-content">
+        <!-- ko foreach: getRegion('summary') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="input-group order-review-popup-wrapper">
+            <!--<button class="btn-dark btn-big fake_button">Continue</button>-->
+            <button class="btn-dark btn-big real_button" data-bind="click: navigateToNextStep">Continue</button>
+        </div>
+    </div>
+</li>

@@ -1,0 +1,20 @@
+<?php
+$productId = (int)$this->getRequest()->getParam('id');
+$product = $this->getProductById($productId);
+?>
+
+<div>
+    <section id="getThisItem">
+        <h2><?php echo __('Select an option');?></h2>
+        <div class="linkBlock">
+            <button class="button-gold color-dark requestToCallback" data-href="/ajax/popup/callback/?id=<?php echo $productId?>">
+                <?php echo __('REQUEST A CALLBACK');?>
+            </button>
+<!--            <button class="button-gold color-dark color-dark-reverse nearbyStore" data-href="/stores">-->
+<!--                --><?php //echo __('FIND NEARBY STORE');?>
+<!--            </button>-->
+            <a href="/ajax/popup/mail/?id=<?php echo $productId?>" class="requestToEmailback"><?php echo __('Receive a quote on email');?></a>
+        </div>
+        <p><?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('product-phone-number')->toHtml();?></p>
+    </section>
+</div>

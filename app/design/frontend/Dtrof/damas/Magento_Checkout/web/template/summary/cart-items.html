@@ -1,0 +1,29 @@
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="list-product">
+            <div class="tableHead tableRow">
+                <div class="tableCell">Image</div>
+                <div class="tableCell">Product Details</div>
+                <div class="tableCell">Price</div>
+                <div class="tableCell">Qtv</div>
+                <div class="tableCell">Subtotal</div>
+            </div>
+            <!--one-item-->
+            <!-- ko foreach: getItems() -->
+            <div class="tableRow">
+                <!-- ko foreach: $parent.elems() -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+                <!-- /ko -->
+            </div>
+            <!-- /ko -->
+
+            <!--.one-item-->
+        </div>
+    </div>
+</div>

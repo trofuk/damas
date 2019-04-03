@@ -1,0 +1,22 @@
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<!-- ko foreach: getRegion('before_details') -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+<!-- /ko -->
+<div class="p-description tableCell">
+    <a href="#" data-bind="attr: { href: $parent.item_name}, text: $parent.name"></a>
+</div>
+<div class="p-price tableCell hasHidden" data-bind="text: getFormattedPrice($parent.base_price)" title="Price">
+</div>
+<div class="p-count tableCell hasHidden quantityBlock" title="Qty">
+    <input type="text" class="count" data-bind="textInput: $parent.qty" disabled="disabled" style="background-color: transparent">
+</div>
+<!-- ko foreach: getRegion('after_details') -->
+<!-- ko template: getTemplate() --><!-- /ko -->
+<!-- /ko -->
+

@@ -1,0 +1,53 @@
+<?php
+$categoryId = (int)$this->getRequest()->getParam('id');
+$categories = $block->getChild();
+$shop_id = 0;
+$attributes = $block->getRootAttribute($categoryId);
+$url =  $block->getCategoryUrl();
+$count = count($categories);
+$grid = 12/(int)$count;
+?>
+
+<?php if(!empty($categories)):?>
+<div class="giftsPage giftIdeas">
+    <h1><?php echo __('GIFT IDEAS');?></h1>
+    <div class="container">
+
+        <div class="gift-section-wrap">
+            <div class="link-items giftsAdvs filterForWhom <?php echo ($categoryId > 0)?'hasActiveCategory':''?>">
+                <?php foreach($categories as $item):?>
+                <div  data-id="<?php echo $item['entity_id'];?>"
+                    class="item col-md-<?php echo $grid;?> <?php echo ($categoryId == $item['entity_id'])? 'active':'' ?> filterGifts">
+                        <img src="<?php echo $item['image']?>" alt="" />
+                        <h4><a href="javascript:void();"><?php echo $item['name'];?></a></h4>
+                </div>
+                <?php endforeach;?>
+            </div>
+        </div>
+
+        <form class="filterSections"
+              action="<?php echo $url;?>"
+              method="get">
+            <div class="filterRelationship filterCircle filterItemBlock">
+                <?php if(!empty($attributes)):?>
+                    <p class="filterTitle"><?=$attributes['frontend_label'];?></p>
+                    <div class="table-wrapper">
+                        <?php foreach($attributes['options'] as $options):?>
+                            <label class="filter-icon-block option-label-image link_<?=$attributes['configuration_id']?>_<?=$attributes['next_id']?>_<?=$options['link_id'];?>"
+                                   onclick="window.oyiGifts.step(<?=$attributes['configuration_id']?>,<?=$attributes['next_id']?>,<?=$options['link_id'];?>);">
+                                <span class="filter-icon-img" style="background-image: url('<?=$options['image']?>')"></span>
+                                <input type="radio" name="<?=$attributes['attribute_code'];?>" value="<?=$options['option_id'];?>">
+                                <span class="filter-icon-title"><?=$options['value']?></span>
+                            </label>
+                        <?php endforeach;?>
+                    </div>
+                <?php endif;?>
+            </div>
+            <div id="content_<?=$attributes['next_code']?>" class="filterItemBlock"></div>
+            <div class="filterButtonsBlock">
+                <button type="submit" class="button-gold color-dark"><?php echo __('Search gifts');?></button>
+            </div>
+        </form>
+    </div>
+</div>
+<?php endif;?>

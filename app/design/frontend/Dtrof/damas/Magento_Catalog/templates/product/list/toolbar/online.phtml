@@ -1,0 +1,29 @@
+<?php
+$category_helper = $this->helper('Magento\Catalog\Helper\Data');
+$_web_helper = $this->helper('Dtrof\Catalog\Helper\Data');
+$website_id = $_web_helper->getCurrentWebsite();
+
+$online = $block->getOnlineStatus(169);
+$offline = $block->getOnlineStatus(170);
+$categories = $_web_helper->categoryIds((int)$category_helper->getCategory()->getId());
+?>
+<div class="checkWrapper online-offline-checkbox">
+    <?php if($website_id == 7 || $website_id == 6):?>
+        <?php if(!in_array(59,$categories)):?>
+        <label class="checkbox <?= ($online)?'active':''?> item">
+            <a href="<?= ($online)?$block->getCurentUrl(0):$block->getCurentUrl(169)?>" class="filter-item-name" data-value="<?= ($online)?'':'169'?>">
+                <input type="checkbox">
+                <span class="label"></span>
+                <?php /* @escapeNotVerified */ echo __('Online products') ?>
+            </a>
+        </label>
+        <label class="checkbox  <?= ($offline)?'active':''?> item">
+            <a href="<?=$block->getCurentUrl(170)?>" class="filter-item-name" data-value="170">
+                <input type="checkbox">
+                <span class="label"></span>
+                <?php /* @escapeNotVerified */ echo __('Offline products') ?>
+            </a>
+        </label>
+        <?php endif;?>
+    <?php endif;?>
+</div>

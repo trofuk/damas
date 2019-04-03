@@ -1,0 +1,68 @@
+<li id="payment_information">
+    <div class="c-step-title">PAYMENT
+        <a href="#" data-bind="click: navigateToPrevStep" class="back-step">previous step
+            <i class="icon-arrow-top"></i>
+        </a>
+    </div>
+    <div class="c-step-content">
+        <div class="col-md-12">
+
+                <!-- ko if: (quoteIsVirtual) -->
+                <!-- ko foreach: getRegion('customer-email') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+                <!--/ko-->
+                <!--/ko-->
+                <form id="co-payment-form" class="form payments" novalidate="novalidate">
+                    <input data-bind='attr: {value: getFormKey()}' type="hidden" name="form_key"/>
+                    <fieldset class="fieldset">
+                        <!-- ko foreach: getRegion('beforeMethods') -->
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                        <!-- /ko -->
+                        <div id="checkout-payment-method-load" class="opc-payment" data-bind="visible: isPaymentMethodsAvailable">
+                            <!-- ko foreach: getRegion('payment-methods-list') -->
+                            <!-- ko template: getTemplate() --><!-- /ko -->
+                            <!-- /ko -->
+                        </div>
+                        <div class="no-quotes-block" data-bind="visible: isPaymentMethodsAvailable() == false">
+                            <!-- ko i18n: 'No Payment method available.'--><!-- /ko -->
+                        </div>
+                        <!-- ko foreach: getRegion('afterMethods') -->
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                        <!-- /ko -->
+                    </fieldset>
+                </form>
+            <!--<div class="input-group">-->
+                <!--<a href="#" class="btn-dark btn-big">CONTINUE SHOPPING</a>-->
+                <!--<button class="action primary checkout btn-dark btn-big"-->
+                        <!--type="submit"-->
+                        <!--data-bind="-->
+                        <!--click: placeOrder,-->
+                        <!--attr: {title: $t('Place Order')},-->
+                        <!--enable: (getCode() == isChecked()),-->
+                        <!--css: {disabled: !isPlaceOrderActionAllowed()}-->
+                        <!--" disabled>-->
+                    <!--<span data-bind="i18n: 'Place Order'"></span>-->
+                <!--</button>-->
+            <!--</div>-->
+
+            <!--TODO: Place Order button UNCOMMENT it if we need to have several methods of payment and have ability to pay through site-->
+            <!--<div class="actions-toolbar">
+                <div class="primary">
+                    <button class="action primary checkout"
+                            type="submit"
+                            data-bind="
+                        click: placeOrder,
+                        attr: {title: $t('Place Order')},
+                        css: {disabled: !isPlaceOrderActionAllowed()},
+                        enable: (getCode() == isChecked())
+                        "
+                            disabled>
+                        <span data-bind="text: $t('Place Order')"></span>
+                    </button>
+                </div>
+            </div>-->
+        </div>
+
+    </div>
+</li>
+

@@ -1,0 +1,44 @@
+<?php
+$root_option_id = 0;
+$entity_id = (int)$this->getRequest()->getParam('id');
+$categories = $block->getChild();
+$attributes = $block->getRootAttribute($entity_id);
+$url =  $block->getCategoryUrl();
+$urlParams =  $block->getParamsUrl();
+if(!empty($attributes)){
+    if($this->getRequest()->getParam($attributes['attribute_code'])) {
+        $root_option_id = $this->getRequest()->getParam($attributes['attribute_code']);
+    }
+}
+
+?>
+<?php if(!empty($categories)):?>
+    <div class="giftsPage giftIdeas giftsFilter">
+        <form class="filterSections"
+              action="<?php echo $url;?>"
+              method="get">
+            <?php if(!empty($categories)):?>
+                <div class="filterForWhom filterCircle filterItemBlock">
+                    <p class="filterTitle"><?php echo __('For Whom');?></p>
+                    <div class="table-wrapper">
+                        <?php foreach($categories as $item):?>
+                            <a href="/<?php echo $item['request_path']?><?=$urlParams?>"
+                               class="gift-link filter-icon-block rightGiftIcon-<?=$item['entity_id'].'m'?> <?php echo ($entity_id ==  $item['entity_id'])? 'active': ''?>">
+                                <span class="icon-<?=$item['entity_id'].'m'?> <?php echo ($entity_id ==  $item['entity_id'])? 'active': ''?> filter-icon-img filter-icon-img-main"></span>
+                                <span class="filter-icon-title"><?php echo $item['name']?></span>
+                            </a>
+                        <?php endforeach;?>
+                    </div>
+                </div>
+            <?php endif;?>
+            <?php if(!empty($attributes)) {
+                include ($block->getTemplateFile('Dtrof_Gifts::gifts_filter_tree.phtml'));
+            } else{
+                include ($block->getTemplateFile('Dtrof_Gifts::gifts_filter_without_tree.phtml'));
+            }?>
+        </form>
+        <div class="giftFilterToggleButton">
+            <a  class="toggleBtn" data-text="<?php echo __('Show Filter');?>"><?php echo __('Hide Filter');?></a>
+        </div>
+    </div>
+<?php endif;?>

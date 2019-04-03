@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Dtrof Team
+ * @copyright Copyright (c) 2016 Dtrof (http://www.Dtrof.com)
+ * @package Dtrof_Ajax
+ */
+-->
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <block class="Dtrof\Catalog\Block\Product\ListProduct" name="root" template="Magento_Catalog::product/list.phtml" output="toHtml">
+            <block name="init.scripts" class="Magento\Framework\View\Element\Template" template="Dtrof_Ajax::init_scripts.phtml"/>
+            <block class="Dtrof\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar_bottom" template="Magento_Catalog::product/list/toolbar_bottom.phtml">
+                <block class="Magento\Theme\Block\Html\Pager" name="product_list_toolbar_pager"/>
+            </block>
+
+            <action method="setToolbarBlockName">
+                <argument name="name" xsi:type="string">product_list_toolbar_bottom</argument>
+            </action>
+            <block class="Magento\Framework\View\Element\FormKey" name="formkey"/>
+            <block class="Dtrof\AjaxWishlist\Block\Product\ProductList\Ajax" name="category.Dtrof.ajax" template="Dtrof_AjaxWishlist::product/list/ajax.phtml"/>
+        </block>
+    </body>
+</page>

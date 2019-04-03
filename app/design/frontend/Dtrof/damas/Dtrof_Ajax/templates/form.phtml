@@ -1,0 +1,95 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<div class="contactUs_right contactUs_inner">
+    <h4><?php echo __('SEND A MESSAGE');?></h4>
+    <form class="form contact"
+          action="/ajax/contactus/post"
+          id="contact-form"
+          method="post"
+          data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>"
+          data-mage-init='{"validation":{}}'>
+        <div class="input-group name required">
+            <label for="name"><?php echo __('Enter your name*');?></label>
+            <input id="name"
+                   name="name"
+                   type="text"
+                   maxlength="50"
+                   autocomplete="off"
+                   value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getUserName()) ?>"
+                   required>
+        </div>
+        <div class="input-group email required">
+            <label for="email_address"><?php echo __('Enter your e-mail*');?></label>
+            <input data-validate="{required:true, 'validate-email':true}"
+                   type="email"
+                   name="email"
+                   id="email_address"
+                   autocomplete="off"
+                   value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>"
+                   required>
+        </div>
+        <div class="input-group telephone">
+            <label for="telephone"><?php echo __('Enter your phone');?></label>
+            <input id="telephone"
+                   name="telephone"
+                   type="text"
+                   maxlength="30"
+                   autocomplete="off" >
+        </div>
+        <div class="input-group comment required">
+            <label for="comment"><?php echo __('Enter your message*');?></label>
+            <textarea id="comment"
+                      name="comment"
+                      data-validate="{required:true}"
+                      required></textarea>
+        </div>
+        <div class="input-group buttons-block">
+            <input type="hidden" name="hideit" id="hideit" value="" />
+            <button type="submit"
+                    class="button-gold color-dark">
+                    <?php /* @escapeNotVerified */ echo __('Submit') ?>
+            </button>
+        </div>
+    </form>
+</div>
+<script>
+    require([
+        'jquery',
+        'mage/mage',
+        'jqueryForm'
+    ], function($){
+        var form = $('#contact-form');
+
+        form.ajaxForm({
+            dataType: 'html',
+            type: 'post',
+            beforeSubmit: function(){
+                var  phone = form.find('#telephone');
+                var  phone_number = phone.val();
+                if(phone_number != ''){
+                    phone.removeClass('mage-error');
+                    $('#phone-address-error').remove();
+                    if(!phone_number.match(/([0-9\\s+]+)/)){
+                        phone.addClass('mage-error');
+                        phone.after('<div generated="true" class="mage-error" id="phone-address-error">' +
+                            '<?php echo __("Please enter a valid number in this field.")?>' +
+                            '</div>');
+                        return false;
+                    }
+                }
+            },
+            success: function(data)
+            {
+                $('.contactUs_container').html(data);
+            }
+        });
+
+    });
+</script>

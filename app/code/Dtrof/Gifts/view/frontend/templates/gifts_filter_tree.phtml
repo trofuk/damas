@@ -1,0 +1,21 @@
+<?php if(!empty($attributes['options'])):?>
+    <div class="filterRelationship filterCircle filterItemBlock">
+        <p class="filterTitle"><?php echo $attributes['frontend_label'];?></p>
+        <div class="table-wrapper">
+            <?php foreach($attributes['options'] as $options):?>
+                <a href="<?=$attributes['url']?>&<?=$attributes['attribute_code']?>=<?=$options['option_id']?>"
+                   class="gift-link filter-icon-block rightGiftIcon <?php echo ($attributes['selected'] ==  $options['option_id'])? 'active': ''?>">
+                    <span class="filter-icon-img" style="background-image: url('<?=$options['image']?>')"></span>
+                    <span class="filter-icon-title"><?php echo $options['value']?></span>
+                </a>
+            <?php endforeach;?>
+        </div>
+    </div>
+    <div id="content_<?=$attributes['next_code']?>">
+        <?php
+        if($this->getRequest()->getParam($attributes['attribute_code'])) {
+            include ($block->getTemplateFile('Dtrof_Gifts::gifts_right_filter_step.phtml'));
+        }
+        ?>
+    </div>
+<?php endif;?>

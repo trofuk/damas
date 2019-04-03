@@ -1,0 +1,186 @@
+<?php
+$block->setProductById();
+$_product = $block->getProduct();
+$productType = $_product->getTypeId();
+$image = 'product_base_image';
+$productImage = $block->getImage($_product, $image);
+$images = array();
+$attributes = array();
+$images = $block->getGalleryImages($_product);
+if($productType != 'watches') {
+    $attributes = $block->getAttributes($_product);
+}
+$_wishlistSubmitParams = $this->helper('Magento\Wishlist\Helper\Data')->getAddParams($_product);
+$imageData = $block->getImageData($_product, $image);
+$_web_helper = $this->helper('Dtrof\Catalog\Helper\Data');
+$website_id = $_web_helper->getCurrentWebsite();
+?>
+<section class="productMainInfo popupQuickWiev">
+    <h1><?php echo $_product->getName(); ?></h1>
+    <div class="row">
+        <div class="product-media col-md-6">
+            <div class="gallery-owl">
+                <div class="gallery-owl-bigimg"><?php echo  $productImage->toHtml(); ?></div>
+                <?php include ($block->getTemplateFile('Dtrof_Ajax::product/gallery.phtml')) ?>
+            </div>
+            <div class="productInfoButtons">
+                <div class="leftBlock col-md-6">
+                    <a href="#" class="toggle-360"></a>
+                </div>
+                <div class="rightBlock col-md-6">
+                    <a href="#" class="sendMail"></a>
+                    <a href="#" class="printPage"></a>
+                </div>
+            </div>
+        </div>
+        <div class="product-info-main col-md-6">
+            <div class="topInfo">
+
+                <div class="productSku">
+                    <?php if($productType != 'watches'):?>
+                        <p><?php echo __('Style Id'); ?>: <span><?php echo $_product->getSku(); ?></span></p>
+                    <?php else:?>
+                        <p><?php echo __('SKU'); ?>: <span><?php echo $_product->getSku(); ?></span></p>
+                    <?php endif;?>
+                </div>
+                <div class="socialLinks">
+                    <span class="shareIconOnQuickView-wrap">
+                        <a href="#" class="shareIconOnQuickView"></a>
+                    </span>
+                    <p class="shareIconOnQuickView-container">
+                        <a href="https://www.facebook.com/sharer.php?u=<?php echo $_product->getProductUrl()?>" target="_blank" class="facebook"></a>
+                        <a href="https://twitter.com/intent/tweet?url=<?php echo $_product->getProductUrl();?>&text=<?php echo $_product->getName();?>" target="_blank" class="twitter"></a>
+                        <a href="https://plus.google.com/share?url=<?php echo $_product->getProductUrl()?>" target="_blank" class="gplus"></a>
+                        <a href="whatsapp://send?text=<?php echo $_product->getProductUrl()?>"  target="_blank" class="whatsapp"></a>
+                        <?php if($imageData['image_url'] != '') : ?>
+                            <a href="https://pinterest.com/pin/create/bookmarklet/?media=<?php echo $imageData['image_url'];?>&url=<?php echo $_product->getProductUrl()?>&description=<?php echo $_product->getName();?>" target="_blank" class="pinterest"></a>
+                        <?php endif; ?>
+                    </p>
+                </div>
+            </div>
+            <div class="prodDescription">
+                
+                <?php echo $this->getChildHtml('product.info'); ?>
+                
+                <?php if($productType == 'watches' || $_product->getAttributeText('online_product') == 'No' || $website_id !=7) : ?>
+                <div class="additionalLinks">
+                    <a class="functionalPopup requestToCallback"
+                       data-href="/ajax/popup/callback/?id=<?php echo $_product->getId();?>"
+                       href="/ajax/popup/callback/?id=<?php echo $_product->getId();?>">
+                        <?php echo __('Request to callback'); ?>
+                    </a>
+                    <a class="functionalPopup requestToEmailback"
+                       href="/ajax/popup/mail/?id=<?php echo $_product->getId();?>">
+                        <?php echo __('Receive a quote to email'); ?>
+                    </a>
+                </div>
+                <?php endif; ?>
+                <div class="product-description">
+                    <?php echo $_product->getDescription(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    // owl Carousel
+    require(
+        ['jquery', 'domReady', 'owlcarousel', 'select2', 'jqueryForm'],
+        function($, domReady){
+            domReady(function(){
+                (function () {
+                    console.log('ready');
+                    $('.gallery-owl-thumb').owlCarousel({
+                        items : 3,
+                        nav: false,
+                        dots: true
+                    });
+                    $('.gallery-owl-thumb img').on('click', function() {
+                        var a = $(this).data('full');
+                        $('.gallery-owl-bigimg img').attr('src', a);
+                    });
+                })();
+                /*(function() {
+                    var select = $('.popupQuickWiev select');
+                    if(select.length) {
+                        select.each(function(){
+                            var customClass;
+                            if( $(this).hasClass('orange-sel')) {
+                                customClass = 'form-filter-drop-orange';
+                            } else if( $(this).closest('.drop-size').length ){
+                                customClass = 'select2-drop-size';
+                            } else if( $(this).closest('.drop-gift').length ){
+                                customClass = 'select2-drop-gift';
+                            } else if( $(this).closest('.drop-silver').length ){
+                                customClass = 'select2-drop-silver';
+                            }  else if( $(this).closest('.drop-dark').length ){
+                                customClass = 'select2-drop-dark';
+                            } else {
+                                customClass = 'form-filter-drop';
+                            }
+                            $(this).select2({
+                                minimumResultsForSearch: -1,
+                                dropdownCssClass: customClass,
+                                containerCssClass: ''
+                            })
+                        });
+                    }
+                })();*/
+
+//                // bind form using 'ajaxForm'
+//                $('#product_addtocart_form').ajaxForm({
+//                    target:        '#output1',   // target element(s) to be updated with server response
+//                    beforeSubmit:  showRequest,  // pre-submit callback
+//                    success:       showResponse  // post-submit callback
+//
+//                    // other available options:
+//                    //url:       url         // override for form's 'action' attribute
+//                    //type:      type        // 'get' or 'post', override for form's 'method' attribute
+//                    //dataType:  null        // 'xml', 'script', or 'json' (expected server response type)
+//                    //clearForm: true        // clear all form fields after successful submit
+//                    //resetForm: true        // reset the form after successful submit
+//
+//                    // $.ajax options can be used here too, for example:
+//                    //timeout:   3000
+//                });
+
+                function showRequest(formData, jqForm, options) {
+                    // formData is an array; here we use $.param to convert it to a string to display it
+                    // but the form plugin does this for you automatically when it submits the data
+                    var queryString = $.param(formData);
+
+                    // jqForm is a jQuery object encapsulating the form element.  To access the
+                    // DOM element for the form do this:
+                    // var formElement = jqForm[0];
+
+                    alert('About to submit: \n\n' + queryString);
+
+                    // here we could return false to prevent the form from being submitted;
+                    // returning anything other than false will allow the form submit to continue
+                    return true;
+                }
+
+// post-submit callback
+                function showResponse(responseText, statusText, xhr, $form)  {
+                    // for normal html responses, the first argument to the success callback
+                    // is the XMLHttpRequest object's responseText property
+
+                    // if the ajaxForm method was passed an Options Object with the dataType
+                    // property set to 'xml' then the first argument to the success callback
+                    // is the XMLHttpRequest object's responseXML property
+
+                    // if the ajaxForm method was passed an Options Object with the dataType
+                    // property set to 'json' then the first argument to the success callback
+                    // is the json data object returned by the server
+
+                    alert('status: ' + statusText + '\n\nresponseText: \n' + responseText +
+                        '\n\nThe output div should have already been updated with the responseText.');
+                }
+
+
+            })
+        }
+    );
+</script>

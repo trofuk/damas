@@ -1,0 +1,34 @@
+<?php
+$attribute = $block->getAttributes(); ?>
+<fieldset id="<?=$attribute['attribute_code']?>" class="fieldset admin__fieldset fieldset-wide" style="margin-top: 30px">
+    <legend class="admin__legend legend">
+        <span><?=$attribute['frontend_label']?> - <?=$attribute['selected_name']?></span>
+    </legend><br>
+    <div class="messages"></div>
+    <?php foreach($attribute['options'] as $options) : ?>
+        <label for="configuration_option_<?=$options['option_id']?>" class="addafter">
+            <button id="<?=$attribute['attribute_code']?>_<?=$options['value_id']?>" type="button"
+                    class="link_<?=$options['link_id']?>_<?=$options['parent_link_id']?> scalable <?=$options['class']?>"
+                    onclick="window.oyiGiftsObj.showNextAttribute(<?=$attribute['request']['store_id']?>,<?=$attribute['request']['configuration_id']?>,<?=$attribute['attribute_id']?>,<?=$options['option_id']?>,<?=$options['value_id']?>,<?='\''.$attribute['attribute_code'].'\''?>,<?='\''.$attribute['parent'].'\''?>);">
+                <span>
+                        <span>
+                            <span><?=$options['value']?></span>
+                        </span>
+                    </span>
+            </button>
+            <?php if($options['class'] != '') : ?>
+            <button type="button"
+                    class="remove_<?=$options['link_id']?>_<?=$options['parent_link_id']?> scalable <?=$options['class']?>"
+                    style="margin-left: -5px; padding-left: 5px; padding-right: 5px;"
+                    onclick="window.oyiGiftsObj.removeAttribute(<?=$options['link_id']?>,<?=$options['parent_link_id']?>,'<?=$attribute['attribute_code']?>');">
+                <span>
+                        <span>
+                            <span>X</span>
+                        </span>
+                    </span>
+            </button>
+            <?php endif; ?>
+        </label>
+    <?php endforeach; ?>
+</fieldset>
+<div id="content_<?=$attribute['attribute_code']?>"></div>

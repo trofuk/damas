@@ -1,0 +1,39 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+$_product = $block->getProduct();
+$cat_ids = $_product->getCategoryIds();
+?>
+
+<div class="additionalLinks">
+    <?php if($_product->getAttributeText('online_product') == 'Yes'):?>
+        <?php if($_product->getAttributeText('inscription') == 'Yes'):?>
+            <a href="/inscription/index/index/?id=<?php echo $_product->getId();?>"
+               class="functionalPopup inscriptionPopup addInscription"><?php echo __('Add an engraving (Free)');?></a>
+            <p class="hidden inscriptionField">
+                <span class="title-inscription"><?php echo __('Inscription:');?></span>
+                <a href="/inscription/index/index/?id=<?php echo $_product->getId();?>" class="inscriptionPopup">
+                    <span class="selected-inscription"></span>
+                </a>
+                <span class="remove-inscription" style="cursor: pointer">X</span>
+            </p>
+        <?php endif;?>
+
+        <?php if(in_array(8,$cat_ids)):?>
+            <a href="/pub/media/How_to_find_out_ring_size.pdf" target="_blank" class="functionalPopup"><?php echo __('How to find out ring size?')?></a>
+        <?php endif;?>
+
+        <?php else: ?>
+        <a href="/ajax/popup/callback/?id=<?php echo $_product->getId();?>"
+           data-href="/ajax/popup/callback/?id=<?php echo $_product->getId();?>"
+           class="functionalPopup requestToCallback"><?php echo __('Request to callback');?></a>
+        <a href="/ajax/popup/mail/?id=<?php echo $_product->getId();?>"
+           class="functionalPopup requestToEmailback"><?php echo __('Receive a quote to email');?></a>
+    <?php endif;?>
+
+
+</div>

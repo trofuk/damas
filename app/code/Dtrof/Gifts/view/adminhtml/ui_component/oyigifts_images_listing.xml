@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">oyigifts_images_listing.oyigifts_images_listing_data_source</item>
+            <item name="deps" xsi:type="string">oyigifts_images_listing.oyigifts_images_listing_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">oyigifts_images_columns</item>
+    </argument>
+    <dataSource name="oyigifts_images_listing_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">GiftsGridDataProvider</argument>
+            <argument name="name" xsi:type="string">oyigifts_images_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">block_id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <columns name="oyigifts_images_columns">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="storageConfig" xsi:type="array">
+                    <item name="provider" xsi:type="string">oyigifts_images_listing.listing_top.bookmarks</item>
+                    <item name="namespace" xsi:type="string">current</item>
+                </item>
+                <item name="childDefaults" xsi:type="array">
+                    <item name="fieldAction" xsi:type="array">
+                        <item name="provider" xsi:type="string">oyigifts_images_listing.oyigifts_images_columns.actions</item>
+                        <item name="target" xsi:type="string">applyAction</item>
+                        <item name="params" xsi:type="array">
+                            <item name="0" xsi:type="string">edit</item>
+                            <item name="1" xsi:type="string">${ $.$data.rowIndex }</item>
+                        </item>
+                    </item>
+                    <item name="controlVisibility" xsi:type="boolean">true</item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">oyigifts_images_listing.listing_top.bookmarks</item>
+                        <item name="root" xsi:type="string">columns.${ $.index }</item>
+                        <item name="namespace" xsi:type="string">current.${ $.storageConfig.root}</item>
+                    </item>
+                </item>
+            </item>
+        </argument>
+
+        <!--<selectionsColumn name="ids">-->
+        <!--<argument name="data" xsi:type="array">-->
+        <!--<item name="config" xsi:type="array">-->
+        <!--<item name="resizeEnabled" xsi:type="boolean">false</item>-->
+        <!--<item name="resizeDefaultWidth" xsi:type="string">55</item>-->
+        <!--<item name="indexField" xsi:type="string">post_id</item>-->
+        <!--</item>-->
+        <!--</argument>-->
+        <!--</selectionsColumn>-->
+        <column name="attribute_id" class="Dtrof\Gifts\Ui\Component\Listing\Column\Attribute">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="label" xsi:type="string" translate="true">Attribute Name</item>
+                </item>
+            </argument>
+        </column>
+
+        <!--<column name="attribute_id" class="Dtrof\Gifts\Ui\Component\Listing\Column\Attribute">-->
+        <!--<argument name="data" xsi:type="array">-->
+        <!--<item name="config" xsi:type="array">-->
+        <!--<item name="sorting" xsi:type="string">asc</item>-->
+        <!--<item name="label" xsi:type="string" translate="true">Attribute Name</item>-->
+        <!--</item>-->
+        <!--</argument>-->
+        <!--</column>-->
+        <actionsColumn name="actions" class="Dtrof\Gifts\Ui\Component\Listing\Column\ImagesActions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="resizeEnabled" xsi:type="boolean">false</item>
+                    <item name="resizeDefaultWidth" xsi:type="string">107</item>
+                    <item name="indexField" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </actionsColumn>
+    </columns>
+</listing>

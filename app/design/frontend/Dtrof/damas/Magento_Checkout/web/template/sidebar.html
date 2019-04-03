@@ -1,0 +1,71 @@
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<!--<div id="opc-sidebar"-->
+     <!--data-bind="afterRender:setModalElement, mageInit: {-->
+    <!--'Magento_Ui/js/modal/modal':{-->
+        <!--'type': 'custom',-->
+        <!--'modalClass': 'opc-sidebar opc-summary-wrapper',-->
+        <!--'wrapperClass': 'checkout-container',-->
+        <!--'parentModalClass': '_has-modal-custom',-->
+        <!--'responsive': true,-->
+        <!--'responsiveClass': 'custom-slide',-->
+        <!--'overlayClass': 'modal-custom-overlay',-->
+        <!--'buttons': []-->
+    <!--}}">-->
+
+    <!--&lt;!&ndash; ko foreach: getRegion('summary') &ndash;&gt;-->
+        <!--&lt;!&ndash; ko template: getTemplate() &ndash;&gt;&lt;!&ndash; /ko &ndash;&gt;-->
+    <!--&lt;!&ndash;/ko&ndash;&gt;-->
+
+    <!--<div class="opc-block-shipping-information">-->
+        <!--&lt;!&ndash; ko foreach: getRegion('shipping-information') &ndash;&gt;-->
+        <!--&lt;!&ndash; ko template: getTemplate() &ndash;&gt;&lt;!&ndash; /ko &ndash;&gt;-->
+        <!--&lt;!&ndash;/ko&ndash;&gt;-->
+    <!--</div>-->
+<!--</div>-->
+<div class="col-md-4 mob-fixed-bl">
+    <div class="aside-checkout">
+        <div class="a-checkout-title">
+            <h4>CHECKOUT PROGRESS</h4>
+        </div>
+        <ul>
+            <li class="change" id="billing-information-summary" data-move="billing-information">
+                <div class="title">
+                    Billing address
+                </div>
+                <div class="a-step-result">
+                    <p></p>
+                </div>
+            </li>
+            <li id="shipping-information-summary" data-move="billing-information">
+                <div class="title">
+                    Shipping address
+                </div>
+                <div class="a-step-result">
+                    <p></p>
+                </div>
+            </li>
+            <li id="shipping-information-method">
+                <div class="title">
+                    Shipping method
+                </div>
+                <div class="a-step-result">
+                    <p></p>
+                </div>
+            </li>
+            <li id="payment-method-summary">
+                <div class="title">
+                    Payment
+                </div>
+                <div class="a-step-result">
+                    <p></p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

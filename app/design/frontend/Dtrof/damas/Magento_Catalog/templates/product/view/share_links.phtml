@@ -1,0 +1,25 @@
+<?php
+/**
+ * Product view template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View
+ */
+
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$_product = $block->getProduct();
+$image = 'category_page_grid';
+$productImage = $block->getImage($_product, $image);
+$imageData = $productImage->getData();
+?>
+<span class="shareIconOnProductPage-wrap">
+    <a href="#" class="shareIconOnProductPage"></a>
+</span>
+<p class="shareIconOnProductPage-container">
+    <a href="https://www.facebook.com/sharer.php?u=<?php echo $_product->getProductUrl()?>" target="_blank" class="facebook"></a>
+    <a href="https://twitter.com/intent/tweet?url=<?php echo $_product->getProductUrl();?>&text=<?php echo $_product->getName();?>" target="_blank" class="twitter"></a>
+    <a href="https://plus.google.com/share?url=<?php echo $_product->getProductUrl()?>"  target="_blank" class="gplus"></a>
+    <a href="whatsapp://send?text=<?php echo $_product->getProductUrl()?>"  target="_blank" class="whatsapp"></a>
+    <?php if($imageData['image_url'] != '') : ?>
+        <a href="https://pinterest.com/pin/create/bookmarklet/?media=<?php echo $imageData['image_url']; ?>&url=<?php echo $_product->getProductUrl()?>&description=<?php echo $_product->getName();?>" target="_blank" class="pinterest"></a>
+    <?php endif; ?>
+</p>

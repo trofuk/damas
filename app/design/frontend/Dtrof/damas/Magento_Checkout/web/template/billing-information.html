@@ -1,0 +1,45 @@
+<li id="billing_information"
+    data-bind="css: { active: showIfUserIsLogged() }"
+>
+    <div class="c-step-title">BILLING ADDRESS</div>
+    <div class="c-step-content">
+        <div class="col-md-12">
+            <p>Select a billing address from your address book or enter a new address.</p>
+            <form action="">
+                <div class="select-wrap drop-silver">
+                    <!--<select class="select" id="billing_select" name="billing_address_id" data-bind="-->
+                        <!--options: addressOptions,-->
+                        <!--optionsText: addressOptionsText,-->
+                        <!--value: selectedAddress,-->
+                        <!--event: {change: onAddressChange(selectedAddress())};-->
+                    <!--"></select>-->
+                    <select id="select_billing" class="select" name="billing_address_id" data-bind="
+                        options: addressOptions,
+                        optionsText: addressOptionsText,
+                        optionsValue: addressOptionsText,
+                        value: selectedAddress,
+                        select2: {minimumResultsForSearch: -1,
+                            dropdownCssClass: 'drop-silver',
+                            containerCssClass: ''},
+                        event: {change: onAddressChange(selectedAddress)};
+                    "></select>
+                </div>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <span>Ship to this address</span>
+                        <input type="radio" name="address" value="1" data-bind="checked: useThisAddress" />
+                        <span></span>
+                    </label>
+                    <label class="radio-item">
+                        <span>Ship to different address</span>
+                        <input type="radio" name="address" value="0" data-bind="checked: useThisAddress" />
+                        <span></span>
+                    </label>
+                </div>
+                <div class="input-group">
+                        <button class="btn-dark btn-big"  data-bind="click: navigateToNextStep">Continue</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</li>

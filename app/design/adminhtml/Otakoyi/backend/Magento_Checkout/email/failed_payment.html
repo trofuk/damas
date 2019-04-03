@@ -1,0 +1,103 @@
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject Payment Transaction Failed Reminder @-->
+<!--@vars {
+"var billingAddress.format('html')|raw":"Billing Address",
+"var checkoutType":"Checkout Type",
+"var customerEmail":"Customer Email",
+"var customer":"Customer Name",
+"var dateAndTime":"Date and Time of Transaction",
+"var paymentMethod":"Payment Method",
+"var shippingAddress.format('html')|raw":"Shipping Address",
+"var shippingMethod":"Shipping Method",
+"var items|raw":"Shopping Cart Items",
+"var total":"Total",
+"var reason":"Transaction Failed Reason"
+} @-->
+
+<h1
+        style="margin:0 auto 15px; color: #452a2b; font-weight: bold; font-family: Arial, sans-serif; font-size: 28px; line-height: 36px; letter-spacing: 4px; text-transform: uppercase; -webkit-text-size-adjust:none;">
+    {{trans "Payment Transaction Failed"}}
+</h1>
+
+<ul
+        style="color: #585858; font-family: Arial, sans-serif; font-size: 13px; line-height: 18px; letter-spacing: 2px; -webkit-text-size-adjust:none; list-style: none">
+    <li
+        style="padding: 5px 0;">
+        <span
+                style="margin-right: 5px; width: 6px; height: 6px; border-radius: 50%; border: 1px solid #b99b6b; background-color: transparent; display: inline-block; position: relative; top: 5px;">&nbsp;</span>
+        <span
+                style="margin-right: 5px; width: 6px; height: 6px; border-radius: 50%; border: 1px solid #b99b6b; background-color: transparent; display: inline-block; position: relative; top: 5px;">&nbsp;</span>
+        <b>{{trans "Reason"}}</b><br />
+        {{var reason}}
+    </li>
+    <li
+        style="padding: 5px 0;">
+        <span
+                style="margin-right: 5px; width: 6px; height: 6px; border-radius: 50%; border: 1px solid #b99b6b; background-color: transparent; display: inline-block; position: relative; top: 5px;">&nbsp;</span>
+        <b>{{trans "Checkout Type"}}</b><br />
+        {{var checkoutType}}
+    </li>
+    <li
+        style="padding: 5px 0;">
+        <span
+                style="margin-right: 5px; width: 6px; height: 6px; border-radius: 50%; border: 1px solid #b99b6b; background-color: transparent; display: inline-block; position: relative; top: 5px;">&nbsp;</span>
+        <b>{{trans "Customer:"}}</b><br />
+        <a
+                href="mailto:{{var customerEmail}}"
+           style="color: #b99b6b; text-decoration: underline; font-size: inherit; font-family: Arial, sans-serif; line-height: inherit; -webkit-text-size-adjust:none; display: inline-block;">{{var customer}}</a> &lt;{{var customerEmail}}&gt;
+    </li>
+    <li
+        style="padding: 5px 0;">
+        <span
+                style="margin-right: 5px; width: 6px; height: 6px; border-radius: 50%; border: 1px solid #b99b6b; background-color: transparent; display: inline-block; position: relative; top: 5px;">&nbsp;</span>
+        <b>{{trans "Items"}}</b><br />
+        {{var items|raw}}
+    </li>
+    <li
+        style="padding: 5px 0;">
+        <span
+                style="margin-right: 5px; width: 6px; height: 6px; border-radius: 50%; border: 1px solid #b99b6b; background-color: transparent; display: inline-block; position: relative; top: 5px;">&nbsp;</span>
+        <b>{{trans "Total:"}}</b><br />
+        {{var total}}
+    </li>
+    <li
+        style="padding: 5px 0;">
+        <span
+                style="margin-right: 5px; width: 6px; height: 6px; border-radius: 50%; border: 1px solid #b99b6b; background-color: transparent; display: inline-block; position: relative; top: 5px;">&nbsp;</span>
+        <b>{{trans "Billing Address:"}}</b><br />
+        {{var billingAddress.format('html')|raw}}
+    </li>
+    <li
+        style="padding: 5px 0;">
+        <span
+                style="margin-right: 5px; width: 6px; height: 6px; border-radius: 50%; border: 1px solid #b99b6b; background-color: transparent; display: inline-block; position: relative; top: 5px;">&nbsp;</span>
+        <b>{{trans "Shipping Address:"}}</b><br />
+        {{var shippingAddress.format('html')|raw}}
+    </li>
+    <li
+        style="padding: 5px 0;">
+        <span
+                style="margin-right: 5px; width: 6px; height: 6px; border-radius: 50%; border: 1px solid #b99b6b; background-color: transparent; display: inline-block; position: relative; top: 5px;">&nbsp;</span>
+        <b>{{trans "Shipping Method:"}}</b><br />
+        {{var shippingMethod}}
+    </li>
+    <li
+        style="padding: 5px 0;">
+        <span
+                style="margin-right: 5px; width: 6px; height: 6px; border-radius: 50%; border: 1px solid #b99b6b; background-color: transparent; display: inline-block; position: relative; top: 5px;">&nbsp;</span>
+        <b>{{trans "Payment Method:"}}</b><br />
+        {{var paymentMethod}}
+    </li>
+    <li
+        style="padding: 5px 0;">
+        <span
+                style="margin-right: 5px; width: 6px; height: 6px; border-radius: 50%; border: 1px solid #b99b6b; background-color: transparent; display: inline-block; position: relative; top: 5px;">&nbsp;</span>
+        <b>{{trans "Date & Time:"}}</b><br />
+        {{var dateAndTime}}
+    </li>
+</ul>

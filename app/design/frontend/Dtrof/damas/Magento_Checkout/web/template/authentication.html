@@ -1,0 +1,85 @@
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<li id="authentication" class="authentication-wrapper"
+
+    data-bind="visible: showIfUserIsNotLogged()">
+    <div class="c-step-title">LOGIN OR REGISTRATION</div>
+    <div class="c-step-content">
+        <div class="col-md-6">
+            <h6>REGISTER TO CREATE AN ACCOUNT</h6>
+
+            <div class="lr-form-description">
+                Register and save time!<br>
+                Register with us for future convenience
+            </div>
+            <div class="select-reg">
+                <div class="input-group">
+                    <button type="submit" class="button-gold bg" data-bind="click: redirectToRegistrationPage"><span
+                            data-bind="i18n: 'Registration'"></span></button>
+                </div>
+                <div class="or">or</div>
+                <div class="login-soc-wrapper" data-bind="html: authenticationFormStoredInVariableNotShowed">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h6>login</h6>
+
+            <div class="lr-form-description">
+                Already registered?<br>Please login:
+            </div>
+            <form
+                    data-role="login"
+                    data-bind="submit:login"
+                    method="post"
+                    class="form-login"
+                    novalidate="novalidate"
+
+            >
+
+                <div class="input-group">
+                    <input
+                            id="login-email"
+                            type="email"
+                            name="username"
+                            data-bind="attr: {autocomplete: autocomplete}"
+                            data-validate="{required:true, 'validate-email':true}"
+                            required="required">
+                    <label class="control-label">Email address</label>
+                </div>
+                <div class="input-group">
+                    <input type="password"
+                           id="login-password"
+                           name="password"
+                           data-bind="attr: {autocomplete: autocomplete}"
+                           data-validate="{required:true, 'validate-password':true}"
+                           autocomplete="off"
+                           required="required">
+                    <label class="control-label">Password</label>
+                </div>
+                <div class="input-group link-forgot">
+                    <a class="action action-remind forgot" data-bind="attr: { href: forgotPasswordUrl }">
+                        <span data-bind="i18n: 'Forgot your password?'"></span>
+                    </a>
+                </div>
+                <div class="input-group btn">
+                    <button type="submit" class="action action-login secondary button-gold bg" ><span
+                            data-bind="i18n: 'Login'"></span></button>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="info">
+                    <p>You can continue with checkout as a guest user:</p>
+                    <a href="" data-bind="click: navigateToAddress" class="btn-dark btn-big">CHECKOUT AS A GUEST</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>

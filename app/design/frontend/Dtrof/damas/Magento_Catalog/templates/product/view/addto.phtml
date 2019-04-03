@@ -1,0 +1,30 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View*/
+?>
+<?php
+$_product = $block->getProduct();
+$_wishlistSubmitParams = $this->helper('Magento\Wishlist\Helper\Data')->getAddParams($_product);
+$compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare');
+?>
+
+<?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()) : ?>
+    <button
+        class="action towishlist addToWishList button-gold color-dark-reverse big"
+        data-post='<?php /* @escapeNotVerified */ echo $_wishlistSubmitParams; ?>'
+        data-action="add-to-wishlist"><?php /* @escapeNotVerified */ echo __('Add to Wish List') ?></button>
+<?php endif; ?>
+
+<script type="text/x-magento-init">
+    {
+        "body": {
+            "addToWishlist": <?php /* @escapeNotVerified */ echo $this->helper('Magento\Framework\Json\Helper\Data')->jsonEncode($block->getWishlistOptions())?>
+        }
+    }
+</script>

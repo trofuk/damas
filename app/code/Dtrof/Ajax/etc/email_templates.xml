@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="callback_request" label="Callback Template" file="callback.html" type="html" module="Dtrof_Ajax" area="frontend"/>
+    <template id="mail_request" label="Callback Template" file="mail.html" type="html" module="Dtrof_Ajax" area="frontend"/>
+</config>

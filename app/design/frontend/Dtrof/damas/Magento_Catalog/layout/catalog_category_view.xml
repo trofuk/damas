@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="columns.top">
+            <container name="category.view.container" htmlTag="div" htmlClass="category-view" after="-">
+                <block class="Magento\Catalog\Block\Category\View" name="category.image"  template="Magento_Catalog::category/image.phtml"/>
+                <block class="Magento\Catalog\Block\Category\View" name="category.description" template="Magento_Catalog::category/description.phtml"/>
+                <block class="Magento\Catalog\Block\Category\View" name="category.other_info" template="Magento_Catalog::category/other_info.phtml"/>
+                <block class="Magento\Catalog\Block\Category\View" name="category.brand.banner" template="Magento_Catalog::category/brand_banner.phtml"/>
+                <block class="Magento\Catalog\Block\Category\View" name="category.cms" template="Magento_Catalog::category/cms.phtml"/>
+            </container>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <container name="caption.wrap" label="Caption Wrap" htmlTag="div" htmlClass="caption-wrap" before="-">
+                <block class="Magento\Catalog\Block\Category\View" name="category.title" template="Magento_Catalog::category/title.phtml"/>
+            </container>
+            <container name="filtering.form.wrap" htmlTag="div" htmlClass="filtering-form-wrap">
+
+                <block class="Dtrof\Catalog\Block\Product\ListProduct"
+                       name="showing.total.item"
+                       template="Magento_Catalog::product/list/showing.phtml" before="-" />
+
+                <container name="form.wrap" label="Form Wrap" htmlTag="div" htmlClass="form-wrap">
+                    <container name="filters.left" label="Filters Left" htmlTag="div" htmlClass="col-md-3 col-sm-3 filters-left" />
+                    <container name="filtered.results" label="Filtered Results" htmlTag="div" htmlClass="col-md-9 col-sm-9 filtered-results">
+                        <container name="filtered.results.items.wrap" label="Filtered Results Items Wrap" htmlTag="div" htmlClass="items-wrap">
+                            <block class="Magento\Catalog\Block\Category\View" name="category.products" template="Magento_Catalog::category/products.phtml">
+                                <block class="Dtrof\Catalog\Block\Product\ListProduct" name="category.products.list" as="product_list" template="Magento_Catalog::product/list.phtml" >
+                                    <block class="Dtrof\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar_bottom" template="Magento_Catalog::product/list/toolbar_bottom.phtml">
+                                        <block class="Dtrof\Theme\Block\Html\Pager" name="product_list_toolbar_pager"/>
+                                    </block>
+                                    <action method="setToolbarBlockName">
+                                        <argument name="name" xsi:type="string">product_list_toolbar_bottom</argument>
+                                    </action>
+                                </block>
+                            </block>
+                        </container>
+                    </container>
+                </container>
+            </container>
+        </referenceContainer>
+        <referenceBlock name="caption.wrap">
+            <arguments>
+                <argument name="id" xsi:type="string">page-title-heading</argument>
+                <argument name="add_base_attribute_aria" xsi:type="string">page-title-heading toolbar-amount</argument>
+            </arguments>
+            <block class="Magento\Catalog\Block\Category\Rss\Link" name="rss.link" template="Magento_Catalog::category/rss.phtml"/>
+        </referenceBlock>
+        <!--<referenceBlock name="catalog.leftnav">-->
+            <!--<block class="Dtrof\LayeredNavigation\Block\Navigation\AvailableCategories" name="catalog.navigation.categories" as="categories" after="catalog.navigation.state" />-->
+            <!--<block class="Dtrof\LayeredNavigation\Block\Navigation\PriceSpinner" name="catalog.navigation.price" as="price_spinner" after="-" />-->
+        <!--</referenceBlock>-->
+    </body>
+</page>
